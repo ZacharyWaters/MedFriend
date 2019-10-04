@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "395210596332",
+    "firebase_url": "https://medfriend-2c890.firebaseio.com",
+    "project_id": "medfriend-2c890",
+    "storage_bucket": "medfriend-2c890.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:395210596332:android:e1184246c1d2ac9ebaaac9",
+        "android_client_info": {
+          "package_name": "com.example.medfriend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "395210596332-ifuef59ca8lol32msjeh3lriq8pvg7n0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.medfriend",
+            "certificate_hash": "f93b73f8c57bb8408e6a815828f7c225190f79e9"
+          }
+        },
+        {
+          "client_id": "395210596332-0jt20q4pjvq7si3g9e9bbag8k9sig87s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC85wanBeAWF_-tqC5Ndlxmr66O2o7OJIU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "395210596332-0jt20q4pjvq7si3g9e9bbag8k9sig87s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
