@@ -12,7 +12,7 @@ public class Homepage extends AppCompatActivity {
     Button addDoseButton;
     View.OnClickListener addDoseListener = new View.OnClickListener(){
         public void  onClick  (View  v){
-            startActivity(new Intent(Homepage.this, AlarmManager.class));
+            startActivity(new Intent(Homepage.this, AlarmCreator.class));
         }
     };
 
