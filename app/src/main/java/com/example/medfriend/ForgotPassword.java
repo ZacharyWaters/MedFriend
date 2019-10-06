@@ -27,13 +27,15 @@ public class ForgotPassword extends AppCompatActivity {
     Button recoverButton;
     TextView emailInput;
     FirebaseAuth myAuth;
+    ProgressBar progressBar;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
-
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);
         emailInput = (TextView)findViewById(R.id.editEmail);
         cancelButton = (Button)findViewById(R.id.cancelButton);
         recoverButton = (Button)findViewById(R.id.recoverButton);
@@ -43,11 +45,13 @@ public class ForgotPassword extends AppCompatActivity {
         recoverButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
                 String theirEmail = emailInput.getText().toString();
                 myAuth.sendPasswordResetEmail(theirEmail)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
+                                progressBar.setVisibility(View.GONE);
                                 if(task.isSuccessful()){
                                     Toast.makeText(ForgotPassword.this,
                                             "Password sent to your email",
