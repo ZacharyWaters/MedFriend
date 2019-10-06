@@ -27,6 +27,13 @@ public class Register extends AppCompatActivity {
     TextView emailInput;
     TextView passwordInput;
     Button registerButton;
+    Button cancelButton;
+    View.OnClickListener cancelListener = new View.OnClickListener(){
+        public void  onClick  (View  v){
+            startActivity(new Intent(Register.this, Login.class));
+        }
+    };
+
     ProgressBar progressBar;
 
 
@@ -45,8 +52,11 @@ public class Register extends AppCompatActivity {
         emailInput = (TextView)findViewById(R.id.emailEdit);
         passwordInput = (TextView)findViewById(R.id.passwordEdit);
         registerButton =  (Button)findViewById(R.id.registerButton);
+        cancelButton = (Button)findViewById(R.id.cancelButton);
 
         mAuth = FirebaseAuth.getInstance();
+
+        cancelButton.setOnClickListener(cancelListener);
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
