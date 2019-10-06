@@ -48,7 +48,7 @@ public class Register extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = nameInput.getText().toString();
+                final String thierName = nameInput.getText().toString();
                 String email = emailInput.getText().toString();
                 final String password = passwordInput.getText().toString();
                 mAuth.createUserWithEmailAndPassword(email, password)
@@ -63,9 +63,9 @@ public class Register extends AppCompatActivity {
                                                 Toast.makeText(Register.this,
                                                         "Registered Successfully, please check your email for verification",
                                                         Toast.LENGTH_LONG).show();
-                                                DatabaseReference myRef = database.getReference("Users&Scores");
+                                                DatabaseReference myRef = database.getReference("Users&Name");
                                                 String UserId = mAuth.getCurrentUser().getUid();
-                                                myRef.child(UserId).setValue("");
+                                                myRef.child(UserId).setValue(thierName);
                                                 //myRef.push().child("User|Score").setValue(UserId);
                                                 nameInput.setText("");
                                                 passwordInput.setText("");
