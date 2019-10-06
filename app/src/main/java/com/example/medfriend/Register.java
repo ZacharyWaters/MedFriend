@@ -27,8 +27,11 @@ public class Register extends AppCompatActivity {
     TextView passwordInput;
     Button registerButton;
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
+
     private FirebaseAuth mAuth;
+
+    //FirebaseDatabase database = FirebaseDatabase.getInstance();
+    //DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
     //DatabaseReference myRef = database.getReference("Users&Scores");
 
     @Override
@@ -61,6 +64,10 @@ public class Register extends AppCompatActivity {
                                                 Toast.makeText(Register.this,
                                                         "Registered Successfully, please check your email for verification",
                                                         Toast.LENGTH_LONG).show();
+                                                //DatabaseReference myRef = database.getReference("Users&Scores");
+                                                //String UserId = mAuth.getCurrentUser().getUid();
+                                                //myRef.child(UserId).setValue("");
+                                                //myRef.push().child("User|Score").setValue(UserId);
                                                 nameInput.setText("");
                                                 passwordInput.setText("");
                                                 emailInput.setText("");
