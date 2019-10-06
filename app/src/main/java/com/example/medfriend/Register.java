@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ public class Register extends AppCompatActivity {
     TextView emailInput;
     TextView passwordInput;
     Button registerButton;
+    ProgressBar progressBar;
 
 
     private FirebaseAuth mAuth;
@@ -38,6 +40,7 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);
         nameInput = (TextView)findViewById(R.id.nameEdit);
         emailInput = (TextView)findViewById(R.id.emailEdit);
         passwordInput = (TextView)findViewById(R.id.passwordEdit);
@@ -48,6 +51,7 @@ public class Register extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
                 final String thierName = nameInput.getText().toString();
                 final String email = emailInput.getText().toString();
                 final String password = passwordInput.getText().toString();
@@ -59,6 +63,7 @@ public class Register extends AppCompatActivity {
                                     mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
+                                            progressBar.setVisibility(View.GONE);
                                             if(task.isSuccessful()){
                                                 Toast.makeText(Register.this,
                                                         "Registered Successfully, please check your email for verification",

@@ -138,4 +138,15 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="544dp" />
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="91dp"
+        android:layout_height="95dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="108dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
