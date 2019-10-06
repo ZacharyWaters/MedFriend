@@ -29,10 +29,9 @@ public class Register extends AppCompatActivity {
 
 
     private FirebaseAuth mAuth;
-
-    //FirebaseDatabase database = FirebaseDatabase.getInstance();
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
     //DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
-    //DatabaseReference myRef = database.getReference("Users&Scores");
+    DatabaseReference myRef = database.getReference("Users&Scores");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
