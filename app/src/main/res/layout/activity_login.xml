@@ -4,117 +4,173 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="true" android:focusableInTouchMode="true"
+    android:background="@drawable/graybackgroundrotated"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".Login">
 
     <Button
         android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="161dp"
-        android:layout_marginLeft="162dp"
-        android:layout_marginRight="161dp"
-        android:layout_marginStart="162dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginEnd="163dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="308dp"
         android:text="Login"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText3" />
+        app:layout_constraintTop_toTopOf="@+id/guideline3"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/emailEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="63dp"
-        android:layout_marginLeft="62dp"
-        android:layout_marginRight="63dp"
-        android:layout_marginStart="62dp"
-        android:layout_marginTop="65dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="176dp"
+        android:background="#FFFFFF"
         android:digits="1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
         android:ems="10"
-        android:hint="Name"
         android:inputType="textPersonName"
         android:maxLength="10"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/passwordEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="63dp"
-        android:layout_marginLeft="62dp"
-        android:layout_marginRight="63dp"
-        android:layout_marginStart="62dp"
-        android:layout_marginTop="27dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="44dp"
+        android:background="#FFFFFF"
         android:digits="1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
         android:ems="10"
-        android:hint="Name"
         android:inputType="textPersonName"
         android:maxLength="10"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/emailEdit" />
+
+    <ImageButton
+        android:id="@+id/registerIbutton"
+        android:layout_width="138dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="44dp"
+        android:background="#00FFFFFF"
+        android:cropToPadding="true"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toEndOf="@+id/dontHave"
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        app:srcCompat="@drawable/signuptransparent" />
+
+    <ImageButton
+        android:id="@+id/forgotIbutton"
+        android:layout_width="266dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="88dp"
+        android:background="#00FFFFFF"
+        android:gravity="center"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        app:srcCompat="@drawable/forgottransparent" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/logo"
         android:layout_width="250dp"
+
         android:layout_height="148dp"
-        android:layout_marginEnd="79dp"
-        android:layout_marginStart="82dp"
-        android:layout_marginTop="65dp"
+        android:layout_marginEnd="81dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logoboxtransparent" />
 
     <TextView
-        android:id="@+id/textView5"
-        android:layout_width="149dp"
-        android:layout_height="21dp"
-        android:layout_marginLeft="64dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="47dp"
+        android:id="@+id/dontHave"
+        android:layout_width="230dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="40dp"
         android:text="Don't have an account?"
         android:textColor="#000000"
+        android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+        app:layout_constraintTop_toTopOf="@+id/guideline4" />
 
-    <ImageButton
-        android:id="@+id/registerIbutton"
-        android:layout_width="134dp"
-        android:layout_height="22dp"
-        android:layout_marginEnd="53dp"
-        android:layout_marginLeft="11dp"
-        android:layout_marginRight="53dp"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="47dp"
-        android:background="#00FFFFFF"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/loginButton"
-        app:srcCompat="@drawable/signuptransparent" />
+    <TextView
+        android:id="@+id/emailText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="148dp"
+        android:text="Email"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
-    <ImageButton
-        android:id="@+id/forgotIbutton"
-        android:layout_width="307dp"
-        android:layout_height="26dp"
-        android:layout_marginBottom="57dp"
-        android:layout_marginEnd="42dp"
-        android:layout_marginLeft="62dp"
-        android:layout_marginRight="42dp"
-        android:layout_marginStart="62dp"
-        android:background="#00FFFFFF"
-        android:scaleType="centerCrop"
+    <TextView
+        android:id="@+id/passwordText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Password"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/emailText" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="731dp"
+        android:layout_marginEnd="205dp"
+        android:layout_marginStart="206dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.50121653"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/forgottransparent" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="411dp"
+        android:layout_marginTop="114dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_begin="114dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="210dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="104dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
