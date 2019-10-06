@@ -16,6 +16,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -23,20 +24,58 @@ import java.util.Date;
 
 public class AlarmCreator extends AppCompatActivity {
 
-    Button btnDatePicker, btnTimePicker;
-    EditText txtDate, txtTime;
-    private int mYear, mMonth, mDay, mHour, mMinute;
+    Button btnDatePicker, btnTimePicker, saveAlarmButton, cancelAlarmButton;
+    TextView txtDate, txtTime;
+    private int year, month, day, hour, minute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_creator);
 
-        btnDatePicker = (Button) findViewById(R.id.datebutton);
-        btnTimePicker = (Button) findViewById(R.id.btn_time);
-        txtDate = (EditText) findViewById(R.id.in_date);
-        txtTime = (EditText) findViewById(R.id.in_time);
+        btnDatePicker = findViewById(R.id.datebutton);
+        btnTimePicker = findViewById(R.id.btn_time);
+        saveAlarmButton = findViewById(R.id.saveAlarmButton);
+        cancelAlarmButton = findViewById(R.id.cancelAlarmButton);
+        txtDate = findViewById(R.id.in_date);
+        txtTime = findViewById(R.id.in_time);
+        year = 0;
+        month = 0;
+        day = 0;
+        hour = 0;
+        minute = 0;
 
+        saveAlarmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (year == 0 || hour == 0) {
+                    Toast.makeText(AlarmCreator.this, "Please select a date and time", Toast.LENGTH_LONG).show();
+                } else {
+                    Intent intent = new Intent();
+                    intent.putExtra("year", year);
+                    intent.putExtra("month", month);
+                    intent.putExtra("day", day);
+                    intent.putExtra("hour", hour);
+                    intent.putExtra("minute", minute);
+                    setResult(1, intent);
+                    finish();
+                }
+            }
+        });
+
+        cancelAlarmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.putExtra("year", year);
+                intent.putExtra("month", month);
+                intent.putExtra("day", day);
+                intent.putExtra("hour", hour);
+                intent.putExtra("minute", minute);
+                setResult(1, intent);
+                finish();
+            }
+        });
 
         //btnTimePicker.setOnClickListener(this);
 
@@ -55,13 +94,18 @@ public class AlarmCreator extends AppCompatActivity {
     public void setTime(int hr, int min) {
         String PMAM = "";
         txtTime = findViewById(R.id.in_time);
-        int hour = (hr  > 12) ? (hr - 12) : (hr);
+        int hourtxt = (hr  > 12) ? (hr - 12) : (hr);
         PMAM = (hr > 12) ? "PM" : "AM";
-        txtTime.setText(String.valueOf(hour) + ":" + String.valueOf(min) + PMAM);
+        txtTime.setText(String.valueOf(hourtxt) + ":" + String.valueOf(min) + PMAM);
+        hour = hr;
+        minute = min;
     }
 
-    public void setDate(int year, int month, int day) {
+    public void setDate(int yr, int mnth, int dy) {
         txtDate = findViewById(R.id.in_date);
-        txtDate.setText(String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year) + " ");
+        txtDate.setText(String.valueOf(dy) + "/" + String.valueOf(mnth) + "/" + String.valueOf(yr) + " ");
+        year = yr;
+        month = mnth;
+        day = dy;
     }
 }
