@@ -21,6 +21,7 @@ import android.widget.Toast;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class AlarmCreator extends AppCompatActivity {
 
@@ -51,6 +52,16 @@ public class AlarmCreator extends AppCompatActivity {
                 if (year == 0 || hour == 0) {
                     Toast.makeText(AlarmCreator.this, "Please select a date and time", Toast.LENGTH_LONG).show();
                 } else {
+
+                    //this is the code to set the alarm for now.
+                    AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+                    GregorianCalendar calendar = new GregorianCalendar(year, month, day, hour, minute);
+                    long time = calendar.getTimeInMillis();
+                    Intent in = new Intent(getApplicationContext(), AlarmReceiver.class);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, in, 0);
+                    am.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+
+
                     Intent intent = new Intent();
                     intent.putExtra("year", year);
                     intent.putExtra("month", month);
