@@ -107,7 +107,11 @@ public class AlarmCreator extends AppCompatActivity {
         txtTime = findViewById(R.id.in_time);
         int hourtxt = (hr  > 12) ? (hr - 12) : (hr);
         PMAM = (hr > 12) ? "PM" : "AM";
-        txtTime.setText(String.valueOf(hourtxt) + ":" + String.valueOf(min) + PMAM);
+        if (min < 10) {
+            txtTime.setText(String.valueOf(hourtxt) + ":0" + String.valueOf(min) + PMAM);
+        } else {
+            txtTime.setText(String.valueOf(hourtxt) + ":" + String.valueOf(min) + PMAM);
+        }
         hour = hr;
         minute = min;
     }
