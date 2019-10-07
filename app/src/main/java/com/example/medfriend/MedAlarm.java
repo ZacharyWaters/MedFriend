@@ -1,8 +1,9 @@
 package com.example.medfriend;
 
+import java.io.Serializable;
 import java.util.GregorianCalendar;
 
-public class MedAlarm {
+public class MedAlarm implements Serializable {
 
     private GregorianCalendar time;
     private int year;
@@ -10,6 +11,7 @@ public class MedAlarm {
     private int day;
     private int hour;
     private int minute;
+    private boolean enabled;
 
     public MedAlarm(int year, int month, int day, int hour, int minute) {
         time = new GregorianCalendar();
@@ -21,6 +23,15 @@ public class MedAlarm {
         this.minute = minute;
 
         time.set(this.year, this.month, this.day, this.hour, this.minute);
+        enabled = true;
+    }
+
+    public void enable() {
+        enabled = true;
+    }
+
+    public void disable() {
+        enabled = false;
     }
 
     public int getYear() {
