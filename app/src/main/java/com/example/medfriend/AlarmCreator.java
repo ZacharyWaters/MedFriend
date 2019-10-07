@@ -59,7 +59,7 @@ public class AlarmCreator extends AppCompatActivity {
                     long time = calendar.getTimeInMillis();
                     Intent in = new Intent(getApplicationContext(), AlarmReceiver.class);
                     PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, in, 0);
-                    am.setRepeating(AlarmManager.RTC_WAKEUP, time, 10000, pendingIntent);
+                    am.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
 
 
                     Intent intent = new Intent();
