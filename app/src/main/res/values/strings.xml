@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MedFriend</string>
+    <string name="title_activity_popup">PopupActivity</string>
 </resources>
