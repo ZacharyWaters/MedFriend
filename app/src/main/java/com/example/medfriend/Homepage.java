@@ -54,10 +54,12 @@ public class Homepage extends AppCompatActivity {
                 Toast.makeText(Homepage.this, "Making Fragment", Toast.LENGTH_LONG).show();
                 MedAlarm medalarm = new MedAlarm(year, month, day, hour, minute);
                 alarms.add(medalarm);
-                /*FragmentTransaction fragmenttransaction = fm.beginTransaction();
+                /*
+                FragmentTransaction fragmenttransaction = fm.beginTransaction();
                 AlarmListRow newRow = AlarmListRow.newInstance(medalarm);
                 fragmenttransaction.add(R.id.listview_medalertlist, newRow, "HELLO");
-                fragmenttransaction.commit();*/
+                fragmenttransaction.commit();
+                 */
             } else {
                 Toast.makeText(Homepage.this, "Invalid Date and Time", Toast.LENGTH_LONG).show();
             }

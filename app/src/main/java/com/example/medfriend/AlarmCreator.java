@@ -140,7 +140,7 @@ public class AlarmCreator extends AppCompatActivity {
 
     public void setDate(int yr, int mnth, int dy) {
         txtDate = findViewById(R.id.in_date);
-        txtDate.setText(String.valueOf(dy) + "/" + String.valueOf(mnth) + "/" + String.valueOf(yr) + " ");
+        txtDate.setText(String.valueOf(mnth+1) + "/" + String.valueOf(dy) + "/" + String.valueOf(yr) + " ");
         year = yr;
         month = mnth;
         day = dy;
