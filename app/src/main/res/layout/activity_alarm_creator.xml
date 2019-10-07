@@ -60,6 +60,21 @@
                 android:layout_marginTop="10dp"
                 android:onClick="showDatePickerDialog"
                 android:text="SELECT DATE" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteX="-29dp"
+            tools:layout_editor_absoluteY="648dp">
+
+            <Spinner
+                android:id="@+id/repeatSpinner"
+                android:layout_width="272dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
         </LinearLayout>
 
         <LinearLayout
@@ -81,6 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50dp"
                 android:text="Save Alarm" />
+
         </LinearLayout>
 
     </LinearLayout>

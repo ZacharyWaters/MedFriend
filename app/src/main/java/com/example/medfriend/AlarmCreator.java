@@ -8,9 +8,12 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -28,6 +31,7 @@ public class AlarmCreator extends AppCompatActivity {
     Button btnDatePicker, btnTimePicker, saveAlarmButton, cancelAlarmButton;
     TextView txtDate, txtTime;
     private int year, month, day, hour, minute;
+    int repeatinterval = -10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,12 @@ public class AlarmCreator extends AppCompatActivity {
         btnTimePicker = findViewById(R.id.btn_time);
         saveAlarmButton = findViewById(R.id.saveAlarmButton);
         cancelAlarmButton = findViewById(R.id.cancelAlarmButton);
+        Spinner repeatSpinner = findViewById(R.id.repeatSpinner);
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.options_array, android.R.layout.simple_spinner_item);
+// Set the layout to use for each dropdown item
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        repeatSpinner.setAdapter(adapter);
         txtDate = findViewById(R.id.in_date);
         txtTime = findViewById(R.id.in_time);
         year = 0;
@@ -45,6 +55,18 @@ public class AlarmCreator extends AppCompatActivity {
         day = 0;
         hour = 0;
         minute = 0;
+
+        repeatSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                repeatinterval = position + 1;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         saveAlarmButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +81,7 @@ public class AlarmCreator extends AppCompatActivity {
                     long time = calendar.getTimeInMillis();
                     Intent in = new Intent(getApplicationContext(), AlarmReceiver.class);
                     PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, in, 0);
-                    am.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+                    am.setRepeating(AlarmManager.RTC_WAKEUP, time, 86400000 / repeatinterval, pendingIntent);
 
 
                     Intent intent = new Intent();
