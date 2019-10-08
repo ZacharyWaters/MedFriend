@@ -28,14 +28,7 @@ public class Register extends AppCompatActivity {
     TextView passwordInput;
     Button registerButton;
     Button cancelButton;
-    View.OnClickListener cancelListener = new View.OnClickListener(){
-        public void  onClick  (View  v){
-            startActivity(new Intent(Register.this, Login.class));
-        }
-    };
-
     ProgressBar progressBar;
-
 
     private FirebaseAuth mAuth;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -47,22 +40,27 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        progressBar = (ProgressBar)findViewById(R.id.progressBar);
-        nameInput = (TextView)findViewById(R.id.nameEdit);
-        emailInput = (TextView)findViewById(R.id.emailEdit);
-        passwordInput = (TextView)findViewById(R.id.passwordEdit);
-        registerButton =  (Button)findViewById(R.id.registerButton);
-        cancelButton = (Button)findViewById(R.id.cancelButton);
+        progressBar = findViewById(R.id.progressBar);
+        nameInput = findViewById(R.id.nameEdit);
+        emailInput = findViewById(R.id.emailEdit);
+        passwordInput = findViewById(R.id.passwordEdit);
+        registerButton =  findViewById(R.id.registerButton);
+        cancelButton = findViewById(R.id.cancelButton);
 
         mAuth = FirebaseAuth.getInstance();
 
-        cancelButton.setOnClickListener(cancelListener);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Register.this, Login.class));
+            }
+        });
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 progressBar.setVisibility(View.VISIBLE);
-                final String thierName = nameInput.getText().toString();
+                final String theirName = nameInput.getText().toString();
                 final String email = emailInput.getText().toString();
                 final String password = passwordInput.getText().toString();
                 mAuth.createUserWithEmailAndPassword(email, password)
@@ -81,7 +79,7 @@ public class Register extends AppCompatActivity {
                                                 DatabaseReference myRef = database.getReference("UsersID&Name");
                                                 String UserId = mAuth.getCurrentUser().getUid();
                                                 myRef.child(UserId);
-                                                myRef.child(UserId).child("Name").setValue(thierName);
+                                                myRef.child(UserId).child("Name").setValue(theirName);
                                                 myRef.child(UserId).child("Email").setValue(email);
                                                 myRef.child(UserId).child("AlarmNumber").setValue(0);
                                                 //myRef.push().child("User|Score").setValue(UserId);
@@ -98,9 +96,6 @@ public class Register extends AppCompatActivity {
                         });
             }
         });
-
-
-
         //String databaseEntry = "Test";
         //myRef.push().child("User|Score").setValue(databaseEntry);
     }

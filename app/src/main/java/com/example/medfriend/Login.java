@@ -27,41 +27,24 @@ public class Login extends AppCompatActivity {
 
     TextView emailInput;
     TextView passwordInput;
-
-    ImageButton registerButton;
-    View.OnClickListener registerListener = new View.OnClickListener(){
-        public void  onClick  (View  v){
-            startActivity(new Intent(Login.this, Register.class));
-        }
-    };
-
     Button loginButton;
-
-
-    ImageButton forgottenButton;
-    View.OnClickListener forgottenListener = new View.OnClickListener(){
-        public void  onClick  (View  v){
-            startActivity(new Intent(Login.this, ForgotPassword.class));
-        }
-    };
-
-
-
+    Button forgottenButton;
+    Button registerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        emailInput = (TextView)findViewById(R.id.emailEdit);
-        passwordInput = (TextView)findViewById(R.id.passwordEdit);
+        emailInput = findViewById(R.id.emailEdit);
+        passwordInput = findViewById(R.id.passwordEdit);
 
         mAuth = FirebaseAuth.getInstance();
 
-        registerButton = (ImageButton)findViewById(R.id.registerIbutton);
-        registerButton.setOnClickListener(registerListener);
+        forgottenButton = findViewById(R.id.forgotButton);
+        loginButton = findViewById(R.id.loginButton);
+        registerButton = findViewById(R.id.registerButton);
 
-        loginButton = (Button) findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,8 +68,19 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        forgottenButton = (ImageButton) findViewById(R.id.forgotIbutton);
-        forgottenButton.setOnClickListener(forgottenListener);
+        forgottenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Login.this, ForgotPassword.class));
+            }
+        });
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Login.this, Register.class));
+            }
+        });
 
     }
 }
