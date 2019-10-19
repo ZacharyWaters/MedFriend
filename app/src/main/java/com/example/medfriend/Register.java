@@ -82,8 +82,10 @@ public class Register extends AppCompatActivity {
                                                 myRef.child(UserId).child("Name").setValue(theirName);
                                                 myRef.child(UserId).child("Email").setValue(email);
                                                 myRef.child(UserId).child("AlarmNumber").setValue(0);
+                                                myRef.child(UserId).child("Alarms").setValue("");
                                                 myRef.child(UserId).child("CareTakerFlag").setValue(0);
-                                                myRef.child(UserId).child("CareTakerUser").setValue("");
+                                                myRef.child(UserId).child("CareTakerUserRequester").setValue("");
+                                                myRef.child(UserId).child("CareTakerUsers").setValue("");
                                                 //myRef.push().child("User|Score").setValue(UserId);
                                                 nameInput.setText("");
                                                 passwordInput.setText("");
