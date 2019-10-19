@@ -53,6 +53,7 @@ public class AddCaretaker extends AppCompatActivity {
         // This is the EmailInput
         emailInput = (TextView)findViewById(R.id.editEmail);
 
+        // This is the Request Button
         requestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,14 +72,17 @@ public class AddCaretaker extends AppCompatActivity {
                             //Object value = snapshot.getValue();
                             Log.d("MYLOG", theirEmail);
                             Log.d("MYLOG", storedEmail);
-                            if(theirEmail == storedEmail){
+                            if(theirEmail.equalsIgnoreCase(storedEmail)){
                                 wasFound = true;
-                                Log.d("MYLOG", "match found with" + storedEmail);
                                 String activeEmail = ((GlobalVariables) AddCaretaker.this.getApplication()).getCurrentUserEmail();
-                                if(theirEmail == activeEmail){
-                                    Log.d("MYLOG", "This is themselves");
+                                if(theirEmail.equalsIgnoreCase(activeEmail)){
                                     Toast.makeText(AddCaretaker.this,
                                             "You cannot add yourself as a caretaker",
+                                            Toast.LENGTH_LONG).show();
+                                } else {
+
+                                    Toast.makeText(AddCaretaker.this,
+                                            "Caretaker request sent to user",
                                             Toast.LENGTH_LONG).show();
                                 }
                             }
@@ -93,6 +97,9 @@ public class AddCaretaker extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
+                        Toast.makeText(AddCaretaker.this,
+                                "Database Error",
+                                Toast.LENGTH_LONG).show();
                     }
                 });
 
