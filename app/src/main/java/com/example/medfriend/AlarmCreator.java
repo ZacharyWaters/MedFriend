@@ -71,6 +71,9 @@ public class AlarmCreator extends AppCompatActivity {
         saveAlarmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //if (year == 0 || hour == 0) {
+
                 if (year == 0) {
                     Toast.makeText(AlarmCreator.this, "Please select a date and time", Toast.LENGTH_LONG).show();
                 } else {

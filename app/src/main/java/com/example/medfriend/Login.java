@@ -49,12 +49,22 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String email = emailInput.getText().toString();
+                final String emailCopy = email;
                 final String password = passwordInput.getText().toString();
                 mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
+                            //This Checks if they are both authenticated and Verified
                             if(mAuth.getCurrentUser().isEmailVerified()){
+                                // set
+
+                                ((GlobalVariables) Login.this.getApplication()).setCurrentUserEmail(emailCopy);
+                                ((GlobalVariables) Login.this.getApplication()).setCurrentUserName(password);
+                                ((GlobalVariables) Login.this.getApplication()).setCurrentUserPassword(password);
+
+
+                                //This Sends them to the homepage
                                 startActivity(new Intent(Login.this, Homepage.class));
                             } else {
                                 Toast.makeText(Login.this, "Please Verify your email address", Toast.LENGTH_LONG).show();

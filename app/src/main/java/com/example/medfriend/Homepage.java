@@ -23,9 +23,17 @@ public class Homepage extends AppCompatActivity {
     private FragmentManager fm;
 
     Button addDoseButton;
+    Button addCareTakerButton;
     View.OnClickListener addDoseListener = new View.OnClickListener(){
         public void  onClick  (View  v){
             Intent intent = new Intent(Homepage.this, AlarmCreator.class);
+            startActivityForResult(intent, 1);
+        }
+    };
+
+    View.OnClickListener addCaretakerListener = new View.OnClickListener(){
+        public void  onClick  (View  v){
+            Intent intent = new Intent(Homepage.this, AddCaretaker.class);
             startActivityForResult(intent, 1);
         }
     };
@@ -37,7 +45,9 @@ public class Homepage extends AppCompatActivity {
         alarms = new ArrayList<>();
 
         addDoseButton = findViewById(R.id.addDoseButton);
+        addCareTakerButton = findViewById(R.id.addCaretakerButton);
         addDoseButton.setOnClickListener(addDoseListener);
+        addCareTakerButton.setOnClickListener(addCaretakerListener);
         fm = this.getSupportFragmentManager();
     }
 
