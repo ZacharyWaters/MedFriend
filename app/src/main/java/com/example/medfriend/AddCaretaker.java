@@ -68,10 +68,11 @@ public class AddCaretaker extends AppCompatActivity {
                             //snapshot.getChildren();
                             //String something = snapshot.getValue().toString();
                             //here is your every post
-                            //String key = snapshot.getKey();
+                            String key = snapshot.getKey();
                             //Object value = snapshot.getValue();
-                            Log.d("MYLOG", theirEmail);
-                            Log.d("MYLOG", storedEmail);
+                            Log.d("MYLOG", key);
+                            //Log.d("MYLOG", theirEmail);
+                            //Log.d("MYLOG", storedEmail);
                             if(theirEmail.equalsIgnoreCase(storedEmail)){
                                 wasFound = true;
                                 String activeEmail = ((GlobalVariables) AddCaretaker.this.getApplication()).getCurrentUserEmail();
@@ -80,7 +81,8 @@ public class AddCaretaker extends AppCompatActivity {
                                             "You cannot add yourself as a caretaker",
                                             Toast.LENGTH_LONG).show();
                                 } else {
-
+                                    firebaseRootRef.child("UsersID&Name").child(key).child("CareTakerFlag").setValue(1);
+                                    firebaseRootRef.child("UsersID&Name").child(key).child("CareTakerUserRequester").child(activeEmail);
                                     Toast.makeText(AddCaretaker.this,
                                             "Caretaker request sent to user",
                                             Toast.LENGTH_LONG).show();
