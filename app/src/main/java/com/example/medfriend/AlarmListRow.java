@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -27,6 +28,8 @@ import android.widget.TextView;
 public class AlarmListRow extends Fragment {
     private static final String ARG_PARAM1 = "string1";
 
+    private static MedAlarm instanceAlarm;
+
     private String mParam1;
 
     private OnFragmentInteractionListener mListener;
@@ -42,6 +45,7 @@ public class AlarmListRow extends Fragment {
      * @return A new instance of fragment AlarmListRow.
      */
     public static AlarmListRow newInstance(MedAlarm medalarm) {
+        instanceAlarm = medalarm;
         AlarmListRow fragment = new AlarmListRow();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -60,7 +64,22 @@ public class AlarmListRow extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_alarm_list_row, container, false);
+
+        View alarmView = inflater.inflate(R.layout.fragment_alarm_list_row, container, false);
+        TextView dateText = (TextView) alarmView.findViewById(R.id.time);
+        Button deleteButton = alarmView.findViewById(R.id.delete);
+
+        dateText.setText(instanceAlarm.getMonth() + "/" + instanceAlarm.getDay() + "/" + instanceAlarm.getYear() + " " + instanceAlarm.getHour() + ":" + instanceAlarm.getMinute());
+
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        return alarmView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -83,6 +102,7 @@ public class AlarmListRow extends Fragment {
 
     @Override
     public void onDetach() {
+
         super.onDetach();
         mListener = null;
     }

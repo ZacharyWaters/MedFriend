@@ -36,8 +36,9 @@ public class PopupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ringtone.stop();
-                Intent newIntent = new Intent(getApplicationContext(), Homepage.class);
-                getApplicationContext().startActivity(newIntent);
+//                Intent newIntent = new Intent(getApplicationContext(), Homepage.class);
+//                getApplicationContext().startActivity(newIntent);
+                finish();
             }
         });
     }

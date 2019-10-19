@@ -71,7 +71,7 @@ public class AlarmCreator extends AppCompatActivity {
         saveAlarmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (year == 0 || hour == 0) {
+                if (year == 0) {
                     Toast.makeText(AlarmCreator.this, "Please select a date and time", Toast.LENGTH_LONG).show();
                 } else {
 
@@ -84,9 +84,10 @@ public class AlarmCreator extends AppCompatActivity {
                     am.setRepeating(AlarmManager.RTC_WAKEUP, time, 86400000 / repeatinterval, pendingIntent);
 
 
+
                     Intent intent = new Intent();
                     intent.putExtra("year", year);
-                    intent.putExtra("month", month);
+                    intent.putExtra("month", month + 1);
                     intent.putExtra("day", day);
                     intent.putExtra("hour", hour);
                     intent.putExtra("minute", minute);
@@ -101,7 +102,7 @@ public class AlarmCreator extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.putExtra("year", year);
-                intent.putExtra("month", month);
+                intent.putExtra("month", month + 1);
                 intent.putExtra("day", day);
                 intent.putExtra("hour", hour);
                 intent.putExtra("minute", minute);
