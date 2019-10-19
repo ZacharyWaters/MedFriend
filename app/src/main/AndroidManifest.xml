@@ -12,7 +12,7 @@
         <activity
             android:name=".PopupActivity"
             android:label="@string/title_activity_popup"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ForgotPassword" />
         <activity android:name=".AlarmCreator" />
         <activity android:name=".Homepage" />
