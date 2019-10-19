@@ -8,6 +8,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.ValueEventListener;
+import android.util.Log;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class AddCaretaker extends AppCompatActivity {
 
     Button cancelButton;
@@ -18,6 +30,12 @@ public class AddCaretaker extends AppCompatActivity {
     };
     Button requestButton;
     TextView emailInput;
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    DatabaseReference firebaseRootRef = firebaseDatabase.getReference();
+    //itemsRef = firebaseRootRef.child("UsersID&Name");
+    DatabaseReference userIDs = firebaseRootRef.child("UsersID&Name");
+    public void parseData(DataSnapshot dataSnapshot){
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +56,48 @@ public class AddCaretaker extends AppCompatActivity {
         requestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String theirEmail = emailInput.getText().toString();
+                final String theirEmail = emailInput.getText().toString();
+                FirebaseDatabase.getInstance().getReference().child("UsersID&Name").
+                        addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        boolean wasFound = false;
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                            String storedEmail = snapshot.child("Email").getValue().toString();
+                            //snapshot.getChildren();
+                            //String something = snapshot.getValue().toString();
+                            //here is your every post
+                            //String key = snapshot.getKey();
+                            //Object value = snapshot.getValue();
+                            Log.d("MYLOG", theirEmail);
+                            Log.d("MYLOG", storedEmail);
+                            if(theirEmail == storedEmail){
+                                wasFound = true;
+                                Log.d("MYLOG", "match found with" + storedEmail);
+                                String activeEmail = ((GlobalVariables) AddCaretaker.this.getApplication()).getCurrentUserEmail();
+                                if(theirEmail == activeEmail){
+                                    Log.d("MYLOG", "This is themselves");
+                                    Toast.makeText(AddCaretaker.this,
+                                            "You cannot add yourself as a caretaker",
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            }
 
+                        }
+                        if(wasFound == false){
+                            Toast.makeText(AddCaretaker.this,
+                                    "No User found",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+
+
+                emailInput.setText("");
             }});
     }
 }
