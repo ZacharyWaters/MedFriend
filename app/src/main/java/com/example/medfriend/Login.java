@@ -101,16 +101,22 @@ public class Login extends AppCompatActivity {
             }
         });
 
+        // This is the listener for the forgot password button, sending you to the forgot password activity
         forgottenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // Starts the forgot password activity
                 startActivity(new Intent(Login.this, ForgotPassword.class));
             }
         });
 
+        // This is the listener for the forgot password button, sending you to the register activity
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //Starts the register activity
                 startActivity(new Intent(Login.this, Register.class));
             }
         });
