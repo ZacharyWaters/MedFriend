@@ -77,9 +77,11 @@ public class Homepage extends AppCompatActivity {
         addDoseButton = findViewById(R.id.addDoseButton);
         addCareTakerButton = findViewById(R.id.addCaretakerButton);
         addDoseButton.setOnClickListener(addDoseListener);
-        //addCareTakerButton.setOnClickListener(addCaretakerListener);
+        addCareTakerButton.setOnClickListener(addCaretakerListener);
         fm = this.getSupportFragmentManager();
         final String activeEmail = ((GlobalVariables) Homepage.this.getApplication()).getCurrentUserEmail();
+        final String activeID = ((GlobalVariables) Homepage.this.getApplication()).getCurrentUserID();
+
         FirebaseDatabase.getInstance().getReference().child("UsersID&Name").
                 addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -135,9 +137,6 @@ public class Homepage extends AppCompatActivity {
                                     }
                                 break;
                                 }
-                                //popup for each request
-                                //yes response
-                                //no response
                             }
                         }
 
