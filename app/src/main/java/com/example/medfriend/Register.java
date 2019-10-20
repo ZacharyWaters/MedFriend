@@ -38,7 +38,7 @@ public class Register extends AppCompatActivity {
     //Firebase Stuff
     private FirebaseAuth mAuth;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -107,7 +107,6 @@ public class Register extends AppCompatActivity {
                         });
             }
         });
-        //String databaseEntry = "Test";
-        //myRef.push().child("User|Score").setValue(databaseEntry);
+
     }
 }
