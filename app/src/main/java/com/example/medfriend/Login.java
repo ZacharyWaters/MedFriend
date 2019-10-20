@@ -25,50 +25,74 @@ public class Login extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
+    // Text-views
     TextView emailInput;
     TextView passwordInput;
+
+    // Buttons
     Button loginButton;
     Button forgottenButton;
     Button registerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Default OnCreate Stuff
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Initializes and locates all the email and password text-fields
         emailInput = findViewById(R.id.emailEdit);
         passwordInput = findViewById(R.id.passwordEdit);
 
-        mAuth = FirebaseAuth.getInstance();
-
+        // Initializes and locates all the buttons to be used
         forgottenButton = findViewById(R.id.forgotButton);
         loginButton = findViewById(R.id.loginButton);
         registerButton = findViewById(R.id.registerButton);
 
+        // Gets the Current Instance of the Database
+        mAuth = FirebaseAuth.getInstance();
+
+        // Sets up the Login Button Listener
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // Grabs the user input email.
                 String email = emailInput.getText().toString();
+
+                // Makes a finalCopy version of it for later use in the OnComplete Instance Class
                 final String emailCopy = email;
+
+                // Gets the users input password, and makes it final for later use in the Instance Class
                 final String password = passwordInput.getText().toString();
+
+                // This is firebase's Auto-Authentication System
                 mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+
                         if(task.isSuccessful()){
-                            //This Checks if they are both authenticated and Verified
+
+                            // This Checks if they are both authenticated and Verified
                             if(mAuth.getCurrentUser().isEmailVerified()){
 
                                 // This now saves the users email and password globally for faster checks
                                 ((GlobalVariables) Login.this.getApplication()).setCurrentUserEmail(emailCopy);
                                 ((GlobalVariables) Login.this.getApplication()).setCurrentUserPassword(password);
 
-
-                                //This Sends them to the homepage
+                                // This Sends them to the homepage
                                 startActivity(new Intent(Login.this, Homepage.class));
+
                             } else {
+
+                                // This Toast displays a message to the user showing that they
+                                // have the correct account, but its not yet verified
                                 Toast.makeText(Login.this, "Please Verify your email address", Toast.LENGTH_LONG).show();
                             }
                         } else{
+                            // This Toast displays a message to the user showing the exception
+                            // for failing to complete the onComplete Task
                             Toast.makeText(Login.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
