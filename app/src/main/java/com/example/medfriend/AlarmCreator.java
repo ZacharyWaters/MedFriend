@@ -78,6 +78,7 @@ public class AlarmCreator extends AppCompatActivity {
                     Toast.makeText(AlarmCreator.this, "Please select a date and time", Toast.LENGTH_LONG).show();
                 } else {
 
+                    //TODO: move code into the fragment/homepage so that we can cancel the alarms there.
                     //this is the code to set the alarm for now.
                     AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
                     GregorianCalendar calendar = new GregorianCalendar(year, month, day, hour, minute);
@@ -94,6 +95,7 @@ public class AlarmCreator extends AppCompatActivity {
                     intent.putExtra("day", day);
                     intent.putExtra("hour", hour);
                     intent.putExtra("minute", minute);
+                    intent.putExtra("Interval", repeatinterval);
                     setResult(1, intent);
                     finish();
                 }

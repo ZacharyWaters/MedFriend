@@ -6,15 +6,21 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 
 /**
@@ -29,6 +35,8 @@ public class AlarmListRow extends Fragment {
     private static final String ARG_PARAM1 = "string1";
 
     private static MedAlarm instanceAlarm;
+
+    private MedAlarm alarm;
 
     private String mParam1;
 
@@ -55,19 +63,23 @@ public class AlarmListRow extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        View alarmView = inflater.inflate(R.layout.fragment_alarm_list_row, container, false);
+        final boolean setView = false;
+        final View alarmView = inflater.inflate(R.layout.fragment_alarm_list_row, null);
+        FrameLayout fl = alarmView.findViewById(R.id.layout);
+        final ViewGroup parent = (ViewGroup) fl.getParent();
         TextView dateText = (TextView) alarmView.findViewById(R.id.time);
-        Button deleteButton = alarmView.findViewById(R.id.delete);
+        Switch enableButton = alarmView.findViewById(R.id.switch1);
+        ImageButton deleteButton = alarmView.findViewById(R.id.delete);
 
         dateText.setText(instanceAlarm.getMonth() + "/" + instanceAlarm.getDay() + "/" + instanceAlarm.getYear() + " " + instanceAlarm.getHour() + ":" + instanceAlarm.getMinute());
 
@@ -75,12 +87,29 @@ public class AlarmListRow extends Fragment {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ((Homepage)getActivity()).deleteAlarm(alarm, alarm.toString());
 
+                onDetach();
+
+
+            }
+        });
+
+        enableButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b) {
+                    ((Homepage)getActivity()).enableAlarm(alarm);
+                } else {
+                    ((Homepage)getActivity()).disableAlarm(alarm);
+                }
             }
         });
 
         return alarmView;
     }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -120,5 +149,10 @@ public class AlarmListRow extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public void setAl() {
+        alarm = new MedAlarm(instanceAlarm.getYear(), instanceAlarm.getMonth(), instanceAlarm.getDay(), instanceAlarm.getHour(), instanceAlarm.getMinute(), instanceAlarm.getInterval(), instanceAlarm.getID());
+        //Log.d(TAG, "" + alarm.getMinute());
     }
 }
