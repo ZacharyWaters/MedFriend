@@ -82,12 +82,16 @@ public class ForgotPassword extends AppCompatActivity {
 
                                 // Makes the Progress bar invisible
                                 progressBar.setVisibility(View.GONE);
+
+                                // If the firebase method worked, then makes a toast showing that
+                                // that email was sent
                                 if(task.isSuccessful()){
                                     Toast.makeText(ForgotPassword.this,
                                             "Password sent to your email",
                                             Toast.LENGTH_LONG).show();
-
                                 } else{
+
+                                    // Else, makes a toast displaying exception
                                     Toast.makeText(ForgotPassword.this,
                                             task.getException().getMessage(),
                                             Toast.LENGTH_LONG).show();
