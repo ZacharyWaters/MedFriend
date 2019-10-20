@@ -58,47 +58,78 @@ public class Homepage extends AppCompatActivity {
         }
     };
 
-
+    // sets the button for dose manager to take you to the Caretaker activity
     View.OnClickListener addCaretakerListener = new View.OnClickListener(){
         public void  onClick  (View  v){
             Intent intent = new Intent(Homepage.this, AddCaretaker.class);
             startActivityForResult(intent, 1);
         }
     };
+
+    // This is the Firebase Database
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference firebaseRootRef = firebaseDatabase.getReference();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // Default OnCreate Stuff
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
+
+        // Creates an arrayList for the alarms
         alarms = new ArrayList<>();
 
+        // Establishes the add Dose Button
         addDoseButton = findViewById(R.id.addDoseButton);
-        addCareTakerButton = findViewById(R.id.addCaretakerButton);
         addDoseButton.setOnClickListener(addDoseListener);
+
+        // Establishes the add Caretaker Button
+        addCareTakerButton = findViewById(R.id.addCaretakerButton);
         addCareTakerButton.setOnClickListener(addCaretakerListener);
+
         fm = this.getSupportFragmentManager();
+
+        // Gets the activeID of the current user to use as the database key
         final String activeID = ((GlobalVariables) Homepage.this.getApplication()).getCurrentUserID();
+
+        // Firebase addListener to get value from the database
         FirebaseDatabase.getInstance().getReference().child("UsersID&Name").
                 addListenerForSingleValueEvent(new ValueEventListener() {
-                   @Override
+
+                    //The On dataChange Method
+                    @Override
                    public void onDataChange(DataSnapshot dataSnapshot) {
-                       String userName = dataSnapshot.child(activeID).child("Name").getValue().toString();
-                       ((GlobalVariables) Homepage.this.getApplication()).setCurrentUserName(userName);
-                       requestCounter = Integer.parseInt(dataSnapshot.child(activeID).child("CareTakerUserRequestCount").getValue().toString());
-                       careTakerCount = Integer.parseInt(dataSnapshot.child(activeID).child("CareTakerUserCount").getValue().toString());
-                       if(requestCounter > 0){
-                           for (DataSnapshot iterator : dataSnapshot.child(activeID).child("CareTakerUserRequester").getChildren()){
-                               //final int requestCountCopy = requestCount;
-                               //popup for each request
-                               final String secondKey = iterator.getKey();
-                               final String savedEmails = iterator.getValue().toString();
-                               AlertDialog.Builder altdial = new AlertDialog.Builder(Homepage.this);
-                               altdial.setMessage("Do you want to be the Caretaker for user: " +savedEmails).
-                                       setCancelable(false).
-                                       setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                        // Gets the Username of the user
+                        String userName = dataSnapshot.child(activeID).child("Name").getValue().toString();
+
+                        // Sets the Global Username value
+                        ((GlobalVariables) Homepage.this.getApplication()).setCurrentUserName(userName);
+
+                        // gets the user's request count
+                        requestCounter = Integer.parseInt(dataSnapshot.child(activeID).child("CareTakerUserRequestCount").getValue().toString());
+
+                        // gets the user's care taker count
+                        careTakerCount = Integer.parseInt(dataSnapshot.child(activeID).child("CareTakerUserCount").getValue().toString());
+
+                        // if the requestCounter is greater than zero, we iterate through the requests
+                        if(requestCounter > 0){
+
+                            // This starts iterating through the requests
+                            for (DataSnapshot iterator : dataSnapshot.child(activeID).child("CareTakerUserRequester").getChildren()){
+
+                                // This gets the key value of the requester
+                                final String secondKey = iterator.getKey();
+
+                                // This gets the email of the requester
+                                final String savedEmails = iterator.getValue().toString();
+
+                                AlertDialog.Builder altdial = new AlertDialog.Builder(Homepage.this);
+
+                                altdial.setMessage("Do you want to be the Caretaker for user: " +savedEmails).
+                                        setCancelable(false).
+                                        setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                            @Override
                                            public void onClick(DialogInterface dialog1, int i) {
                                                requestCounter = requestCounter - 1;
@@ -121,19 +152,16 @@ public class Homepage extends AppCompatActivity {
                                        dialog2.cancel();
                                    }
                                });
-                               AlertDialog alert = altdial.create();
-                               alert.setTitle("Dialog Header");
-                               alert.show();
-
-                           }
-                       }
+                                AlertDialog alert = altdial.create();
+                                alert.setTitle("Dialog Header");
+                                alert.show();
+                            }
+                        }
                    }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError){}
-
-                    }
-                    );
+                });
     }
 
 
