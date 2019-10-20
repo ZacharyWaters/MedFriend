@@ -23,20 +23,26 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Register extends AppCompatActivity {
 
+    // Text-views
     TextView nameInput;
     TextView emailInput;
     TextView passwordInput;
+
+    // Buttons
     Button registerButton;
     Button cancelButton;
+
+    // Progress Bar
     ProgressBar progressBar;
 
+    //Firebase Stuff
     private FirebaseAuth mAuth;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    //DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
-    //DatabaseReference myRef = database.getReference("Users&Scores");
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // Default OnCreate Stuff
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
