@@ -95,18 +95,38 @@ public class AddCaretaker extends AppCompatActivity {
                                             }
                                         }
                                     }
-                                    if(duplicate == false){
-                                        requestCount = requestCount + 1;
-                                        String newValue = String.valueOf(requestCount);
-                                        firebaseRootRef.child("UsersID&Name").child(key).child("CareTakerUserRequestCount").setValue(newValue);
-                                        firebaseRootRef.child("UsersID&Name").child(key).child("CareTakerUserRequester").child(newValue).setValue(activeEmail);
-                                        Toast.makeText(AddCaretaker.this,
-                                                "Caretaker request sent to user",
-                                                Toast.LENGTH_LONG).show();
-                                    } else {
+                                    if(duplicate == true){
                                         Toast.makeText(AddCaretaker.this,
                                                 "Caretaker request already sent to this user",
                                                 Toast.LENGTH_LONG).show();
+                                    } else {
+                                        int careTakerCount = Integer.parseInt(snapshot.child("CareTakerUserCount").getValue().toString());
+                                        boolean duplicate2 = false;
+                                        if(careTakerCount > 0){
+                                            for (DataSnapshot iterator2 : snapshot.child("CareTakerUsers").getChildren()){
+                                                //String savedEmails = iterator.toString();
+                                                String savedEmails = iterator2.getValue().toString();
+                                                //Log.d("MYLOG", savedEmails);
+                                                if(savedEmails.equalsIgnoreCase(activeEmail)){
+                                                    duplicate2 = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        if(duplicate2 == true){
+                                            Toast.makeText(AddCaretaker.this,
+                                                    "User is already your Caretaker",
+                                                    Toast.LENGTH_LONG).show();
+                                        } else {
+                                            requestCount = requestCount + 1;
+                                            String newValue = String.valueOf(requestCount);
+                                            firebaseRootRef.child("UsersID&Name").child(key).child("CareTakerUserRequestCount").setValue(newValue);
+                                            firebaseRootRef.child("UsersID&Name").child(key).child("CareTakerUserRequester").child(newValue).setValue(activeEmail);
+                                            Toast.makeText(AddCaretaker.this,
+                                                    "Caretaker request sent to user",
+                                                    Toast.LENGTH_LONG).show();
+                                        }
                                     }
                                     //firebaseRootRef.child("UsersID&Name").child(key).child("CareTakerUserRequester").setValue(activeEmail);
                                 }
