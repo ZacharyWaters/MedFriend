@@ -33,7 +33,7 @@ public class AddCaretaker extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference firebaseRootRef = firebaseDatabase.getReference();
     //itemsRef = firebaseRootRef.child("UsersID&Name");
-    DatabaseReference userIDs = firebaseRootRef.child("UsersID&Name");
+    //DatabaseReference userIDs = firebaseRootRef.child("UsersID&Name");
     public void parseData(DataSnapshot dataSnapshot){
     }
 
@@ -91,6 +91,7 @@ public class AddCaretaker extends AppCompatActivity {
                                             //Log.d("MYLOG", savedEmails);
                                             if(savedEmails.equalsIgnoreCase(activeEmail)){
                                                 duplicate = true;
+                                                break;
                                             }
                                         }
                                     }
