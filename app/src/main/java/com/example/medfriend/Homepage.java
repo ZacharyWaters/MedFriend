@@ -34,15 +34,23 @@ import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 
 public class Homepage extends AppCompatActivity {
 
+    // I think this is an arraylist for alarms
     public ArrayList<MedAlarm> alarms;
+
     private FragmentManager fm;
     private static int id = 0;
 
+    // The counter of people requesting you for care-taking
     int requestCounter;
+
+    // The counter of people you are currently care-taking
     int careTakerCount;
 
+    // Buttons
     Button addDoseButton;
     Button addCareTakerButton;
+
+    // sets the button for dose manager to take you to the AlarmCreator activity
     View.OnClickListener addDoseListener = new View.OnClickListener(){
         public void  onClick  (View  v){
             Intent intent = new Intent(Homepage.this, AlarmCreator.class);
@@ -50,13 +58,6 @@ public class Homepage extends AppCompatActivity {
         }
     };
 
-
-//    View.OnClickListener addCaretakerListener = new View.OnClickListener(){
-//        public void  onClick  (View  v){
-//            Intent intent = new Intent(Homepage.this, AddCaretaker.class);
-//            startActivityForResult(intent, 1);
-//        }
-//    };
 
     View.OnClickListener addCaretakerListener = new View.OnClickListener(){
         public void  onClick  (View  v){
@@ -79,7 +80,6 @@ public class Homepage extends AppCompatActivity {
         addDoseButton.setOnClickListener(addDoseListener);
         addCareTakerButton.setOnClickListener(addCaretakerListener);
         fm = this.getSupportFragmentManager();
-        final String activeEmail = ((GlobalVariables) Homepage.this.getApplication()).getCurrentUserEmail();
         final String activeID = ((GlobalVariables) Homepage.this.getApplication()).getCurrentUserID();
         FirebaseDatabase.getInstance().getReference().child("UsersID&Name").
                 addListenerForSingleValueEvent(new ValueEventListener() {

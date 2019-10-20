@@ -121,13 +121,29 @@ public class Register extends AppCompatActivity {
 
                                                 // Creates the userId and the children values
                                                 myRef.child(UserId);
+
+                                                // This is the user's name
                                                 myRef.child(UserId).child("Name").setValue(theirName);
+
+                                                // This is the user's Email
                                                 myRef.child(UserId).child("Email").setValue(email);
+
+                                                // This is the count of the number of alarms
                                                 myRef.child(UserId).child("AlarmNumber").setValue("0");
+
+                                                // This is the child list of alarms
                                                 myRef.child(UserId).child("Alarms").setValue("");
+
+                                                // This is the count of how many people are requesting caretaker
                                                 myRef.child(UserId).child("CareTakerUserRequestCount").setValue("0");
+
+                                                // This is the child list of requester users
                                                 myRef.child(UserId).child("CareTakerUserRequester").setValue("");
+
+                                                // This is the count of how many people you are care-taking
                                                 myRef.child(UserId).child("CareTakerUserCount").setValue("0");
+
+                                                // This is the child list of care-taking users
                                                 myRef.child(UserId).child("CareTakerUsers").setValue("");
 
                                                 // Empties out the text-fields
