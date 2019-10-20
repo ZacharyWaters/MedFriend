@@ -46,18 +46,27 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        progressBar = findViewById(R.id.progressBar);
+        // Initializes and locates all the user input text-fields
         nameInput = findViewById(R.id.nameEdit);
         emailInput = findViewById(R.id.emailEdit);
         passwordInput = findViewById(R.id.passwordEdit);
+
+        // Initializes and locates all the buttons to be used
         registerButton =  findViewById(R.id.registerButton);
         cancelButton = findViewById(R.id.cancelButton);
 
+        // Initializes and locates the progress bar to be used
+        progressBar = findViewById(R.id.progressBar);
+
+        // Gets the Current Instance of the Database
         mAuth = FirebaseAuth.getInstance();
 
+        // This is the listener for the cancel button, sending you to the login activity
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // Starts the login activity
                 startActivity(new Intent(Register.this, Login.class));
             }
         });
