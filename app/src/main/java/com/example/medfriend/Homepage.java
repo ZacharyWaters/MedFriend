@@ -197,7 +197,7 @@ public class Homepage extends AppCompatActivity {
                         }
                    }
 
-                    // This is the database Error Handler 
+                   // This is the database Error Handler
                    @Override
                    public void onCancelled(DatabaseError databaseError){}
                 });
@@ -214,7 +214,6 @@ public class Homepage extends AppCompatActivity {
             int hour = data.getIntExtra("hour", 10);
             int minute = data.getIntExtra("minute", 30);
             int repeatinterval = data.getIntExtra("Interval", 1);
-
 
 
             if (year != 0 && hour != 0 && year != 1920) {
