@@ -23,35 +23,50 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Register extends AppCompatActivity {
 
+    // Text-views
     TextView nameInput;
     TextView emailInput;
     TextView passwordInput;
+
+    // Buttons
     Button registerButton;
     Button cancelButton;
+
+    // Progress Bar
     ProgressBar progressBar;
 
+    //Firebase Stuff
     private FirebaseAuth mAuth;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    //DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
-    //DatabaseReference myRef = database.getReference("Users&Scores");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // Default OnCreate Stuff
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        progressBar = findViewById(R.id.progressBar);
+        // Initializes and locates all the user input text-fields
         nameInput = findViewById(R.id.nameEdit);
         emailInput = findViewById(R.id.emailEdit);
         passwordInput = findViewById(R.id.passwordEdit);
+
+        // Initializes and locates all the buttons to be used
         registerButton =  findViewById(R.id.registerButton);
         cancelButton = findViewById(R.id.cancelButton);
 
+        // Initializes and locates the progress bar to be used
+        progressBar = findViewById(R.id.progressBar);
+
+        // Gets the Current Instance of the Database
         mAuth = FirebaseAuth.getInstance();
 
+        // This is the listener for the cancel button, sending you to the login activity
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // Starts the login activity
                 startActivity(new Intent(Register.this, Login.class));
             }
         });
@@ -81,10 +96,11 @@ public class Register extends AppCompatActivity {
                                                 myRef.child(UserId);
                                                 myRef.child(UserId).child("Name").setValue(theirName);
                                                 myRef.child(UserId).child("Email").setValue(email);
-                                                myRef.child(UserId).child("AlarmNumber").setValue(0);
+                                                myRef.child(UserId).child("AlarmNumber").setValue("0");
                                                 myRef.child(UserId).child("Alarms").setValue("");
-                                                myRef.child(UserId).child("CareTakerFlag").setValue(0);
+                                                myRef.child(UserId).child("CareTakerUserRequestCount").setValue("0");
                                                 myRef.child(UserId).child("CareTakerUserRequester").setValue("");
+                                                myRef.child(UserId).child("CareTakerUserCount").setValue("0");
                                                 myRef.child(UserId).child("CareTakerUsers").setValue("");
                                                 //myRef.push().child("User|Score").setValue(UserId);
                                                 nameInput.setText("");
@@ -100,7 +116,6 @@ public class Register extends AppCompatActivity {
                         });
             }
         });
-        //String databaseEntry = "Test";
-        //myRef.push().child("User|Score").setValue(databaseEntry);
+
     }
 }
