@@ -81,64 +81,53 @@ public class Homepage extends AppCompatActivity {
         fm = this.getSupportFragmentManager();
         final String activeEmail = ((GlobalVariables) Homepage.this.getApplication()).getCurrentUserEmail();
         final String activeID = ((GlobalVariables) Homepage.this.getApplication()).getCurrentUserID();
-
         FirebaseDatabase.getInstance().getReference().child("UsersID&Name").
                 addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            //Log.d("MYLOG", snapshot.toString());
-                            String storedEmail = snapshot.child("Email").getValue().toString();
-                            if(storedEmail.equalsIgnoreCase(activeEmail)){
-                                String userName = snapshot.child("Name").getValue().toString();
-                                ((GlobalVariables) Homepage.this.getApplication()).setCurrentUserName(userName);
-                                //Check number of requests
-                                requestCounter = Integer.parseInt(snapshot.child("CareTakerUserRequestCount").getValue().toString());
-                                careTakerCount = Integer.parseInt(snapshot.child("CareTakerUserCount").getValue().toString());
-                                //Iterate through requests
-                                if(requestCounter > 0){
-                                    final String key = snapshot.getKey();
-                                    for (DataSnapshot iterator : snapshot.child("CareTakerUserRequester").getChildren()){
-                                        //final int requestCountCopy = requestCount;
-                                        //popup for each request
-                                        final String secondKey = iterator.getKey();
-                                        final String savedEmails = iterator.getValue().toString();
-                                        AlertDialog.Builder altdial = new AlertDialog.Builder(Homepage.this);
-                                        altdial.setMessage("Do you want to be the Caretaker for user: " +savedEmails).
-                                                setCancelable(false).
-                                                setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog1, int i) {
-                                                requestCounter = requestCounter - 1;
-                                                String newValue = String.valueOf(requestCounter);
-                                                firebaseRootRef.child("UsersID&Name").child(key).child("CareTakerUserRequestCount").setValue(newValue);
-                                                firebaseRootRef.child("UsersID&Name").child(key).child("CareTakerUserRequester").child(secondKey).removeValue();
-                                                careTakerCount = careTakerCount + 1;
-                                                String SecondNewValue = String.valueOf(careTakerCount);
-                                                firebaseRootRef.child("UsersID&Name").child(key).child("CareTakerUserCount").setValue(SecondNewValue);
-                                                firebaseRootRef.child("UsersID&Name").child(key).child("CareTakerUsers").child(SecondNewValue).setValue(savedEmails);
-                                                dialog1.cancel();
-                                            }
-                                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog2, int i) {
-                                                requestCounter = requestCounter - 1;
-                                                String newValue = String.valueOf(requestCounter);
-                                                firebaseRootRef.child("UsersID&Name").child(key).child("CareTakerUserRequestCount").setValue(newValue);
-                                                firebaseRootRef.child("UsersID&Name").child(key).child("CareTakerUserRequester").child(secondKey).removeValue();
-                                                dialog2.cancel();
-                                            }
-                                        });
-                                        AlertDialog alert = altdial.create();
-                                        alert.setTitle("Dialog Header");
-                                        alert.show();
+                   @Override
+                   public void onDataChange(DataSnapshot dataSnapshot) {
+                       String userName = dataSnapshot.child(activeID).child("Name").getValue().toString();
+                       ((GlobalVariables) Homepage.this.getApplication()).setCurrentUserName(userName);
+                       requestCounter = Integer.parseInt(dataSnapshot.child(activeID).child("CareTakerUserRequestCount").getValue().toString());
+                       careTakerCount = Integer.parseInt(dataSnapshot.child(activeID).child("CareTakerUserCount").getValue().toString());
+                       if(requestCounter > 0){
+                           for (DataSnapshot iterator : dataSnapshot.child(activeID).child("CareTakerUserRequester").getChildren()){
+                               //final int requestCountCopy = requestCount;
+                               //popup for each request
+                               final String secondKey = iterator.getKey();
+                               final String savedEmails = iterator.getValue().toString();
+                               AlertDialog.Builder altdial = new AlertDialog.Builder(Homepage.this);
+                               altdial.setMessage("Do you want to be the Caretaker for user: " +savedEmails).
+                                       setCancelable(false).
+                                       setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                           @Override
+                                           public void onClick(DialogInterface dialog1, int i) {
+                                               requestCounter = requestCounter - 1;
+                                               String newValue = String.valueOf(requestCounter);
+                                               firebaseRootRef.child("UsersID&Name").child(activeID).child("CareTakerUserRequestCount").setValue(newValue);
+                                               firebaseRootRef.child("UsersID&Name").child(activeID).child("CareTakerUserRequester").child(secondKey).removeValue();
+                                               careTakerCount = careTakerCount + 1;
+                                               String SecondNewValue = String.valueOf(careTakerCount);
+                                               firebaseRootRef.child("UsersID&Name").child(activeID).child("CareTakerUserCount").setValue(SecondNewValue);
+                                               firebaseRootRef.child("UsersID&Name").child(activeID).child("CareTakerUsers").child(SecondNewValue).setValue(savedEmails);
+                                               dialog1.cancel();
+                                           }
+                                       }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                   @Override
+                                   public void onClick(DialogInterface dialog2, int i) {
+                                       requestCounter = requestCounter - 1;
+                                       String newValue = String.valueOf(requestCounter);
+                                       firebaseRootRef.child("UsersID&Name").child(activeID).child("CareTakerUserRequestCount").setValue(newValue);
+                                       firebaseRootRef.child("UsersID&Name").child(activeID).child("CareTakerUserRequester").child(secondKey).removeValue();
+                                       dialog2.cancel();
+                                   }
+                               });
+                               AlertDialog alert = altdial.create();
+                               alert.setTitle("Dialog Header");
+                               alert.show();
 
-                                        }
-                                    }
-                                break;
-                                }
-                            }
-                        }
+                           }
+                       }
+                   }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError){}
