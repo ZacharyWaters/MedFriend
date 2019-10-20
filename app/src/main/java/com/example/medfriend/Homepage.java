@@ -125,22 +125,47 @@ public class Homepage extends AppCompatActivity {
                                 // This gets the email of the requester
                                 final String savedEmails = iterator.getValue().toString();
 
+                                // This creates the alert for accepting or rejecting caretaker requests
                                 AlertDialog.Builder altdial = new AlertDialog.Builder(Homepage.this);
 
+                                //  This creates the dialog for accepting or rejecting caretaker requests
                                 altdial.setMessage("Do you want to be the Caretaker for user: " +savedEmails).
+
+                                        // This makes it so you can't cancel out of the alt-dial
                                         setCancelable(false).
+
+                                        // This is the "Yes" button
                                         setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                            @Override
                                            public void onClick(DialogInterface dialog1, int i) {
+
+                                               // This decrements the number of requests from the request counter
                                                requestCounter = requestCounter - 1;
+
+                                               // This turns the request counter back into a string for storage in the database
                                                String newValue = String.valueOf(requestCounter);
+
+                                               // This stores the new request counter back in the database
                                                firebaseRootRef.child("UsersID&Name").child(activeID).child("CareTakerUserRequestCount").setValue(newValue);
+
+                                               // this removes the requester email from the requester user list
                                                firebaseRootRef.child("UsersID&Name").child(activeID).child("CareTakerUserRequester").child(secondKey).removeValue();
+
+                                               // This increases the amount of caretaker values
                                                careTakerCount = careTakerCount + 1;
+
+                                               // This turns the caretaker count back into a string for storage in the database
                                                String SecondNewValue = String.valueOf(careTakerCount);
+
+                                               // This stores the new caretaker counter back in the database
                                                firebaseRootRef.child("UsersID&Name").child(activeID).child("CareTakerUserCount").setValue(SecondNewValue);
+
+                                               // This stores the user's email back into the caretaker list
                                                firebaseRootRef.child("UsersID&Name").child(activeID).child("CareTakerUsers").child(SecondNewValue).setValue(savedEmails);
+
+                                               // Closes the Dialog Box
                                                dialog1.cancel();
+
                                            }
                                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                                    @Override
