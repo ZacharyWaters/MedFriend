@@ -167,16 +167,29 @@ public class Homepage extends AppCompatActivity {
                                                dialog1.cancel();
 
                                            }
-                                       }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                   @Override
-                                   public void onClick(DialogInterface dialog2, int i) {
-                                       requestCounter = requestCounter - 1;
-                                       String newValue = String.valueOf(requestCounter);
-                                       firebaseRootRef.child("UsersID&Name").child(activeID).child("CareTakerUserRequestCount").setValue(newValue);
-                                       firebaseRootRef.child("UsersID&Name").child(activeID).child("CareTakerUserRequester").child(secondKey).removeValue();
-                                       dialog2.cancel();
-                                   }
+                                            // This is the "No" button
+                                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog2, int i) {
+
+                                                // This decrements the number of requests from the request counter
+                                                requestCounter = requestCounter - 1;
+
+                                                // This turns the request counter back into a string for storage in the database
+                                                String newValue = String.valueOf(requestCounter);
+
+                                                // This stores the new request counter back in the database
+                                                firebaseRootRef.child("UsersID&Name").child(activeID).child("CareTakerUserRequestCount").setValue(newValue);
+
+                                                // this removes the requester email from the requester user list
+                                                firebaseRootRef.child("UsersID&Name").child(activeID).child("CareTakerUserRequester").child(secondKey).removeValue();
+
+                                                // Closes the Dialog Box
+                                                dialog2.cancel();
+                                            }
                                });
+
+                                // Creates, Titles, and Shows the Alert
                                 AlertDialog alert = altdial.create();
                                 alert.setTitle("Dialog Header");
                                 alert.show();
@@ -184,8 +197,9 @@ public class Homepage extends AppCompatActivity {
                         }
                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError){}
+                    // This is the database Error Handler 
+                   @Override
+                   public void onCancelled(DatabaseError databaseError){}
                 });
     }
 
