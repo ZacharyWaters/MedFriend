@@ -81,7 +81,7 @@ public class AlarmListRow extends Fragment {
         Switch enableButton = alarmView.findViewById(R.id.switch1);
         ImageButton deleteButton = alarmView.findViewById(R.id.delete);
 
-        dateText.setText(instanceAlarm.getMonth() + "/" + instanceAlarm.getDay() + "/" + instanceAlarm.getYear() + " " + instanceAlarm.getHour() + ":" + instanceAlarm.getMinute());
+        dateText.setText(instanceAlarm.getMonth() + "/" + instanceAlarm.getDay() + "/" + instanceAlarm.getYear() + " " + instanceAlarm.getHour() + ":" + instanceAlarm.getMinute() + " " + instanceAlarm.getName());
 
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -152,7 +152,7 @@ public class AlarmListRow extends Fragment {
     }
 
     public void setAl() {
-        alarm = new MedAlarm(instanceAlarm.getYear(), instanceAlarm.getMonth(), instanceAlarm.getDay(), instanceAlarm.getHour(), instanceAlarm.getMinute(), instanceAlarm.getInterval(), instanceAlarm.getID());
+        alarm = new MedAlarm(instanceAlarm.getYear(), instanceAlarm.getMonth(), instanceAlarm.getDay(), instanceAlarm.getHour(), instanceAlarm.getMinute(), instanceAlarm.getInterval(), instanceAlarm.getID(), instanceAlarm.getName());
         //Log.d(TAG, "" + alarm.getMinute());
     }
 }

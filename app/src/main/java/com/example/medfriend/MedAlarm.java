@@ -16,10 +16,11 @@ public class MedAlarm implements Serializable {
     private int minute;
     private int interval;
     private int ID;
+    private String name;
     private PendingIntent p;
     private boolean enabled;
 
-    public MedAlarm(int year, int month, int day, int hour, int minute, int interval, int id) {
+    public MedAlarm(int year, int month, int day, int hour, int minute, int interval, int id, String name) {
         time = new GregorianCalendar();
 
         this.year = year;
@@ -28,6 +29,7 @@ public class MedAlarm implements Serializable {
         this.hour = hour;
         this.minute = minute;
         this.interval = interval;
+        this.name = name;
 
         this.ID = id;
 
@@ -75,6 +77,10 @@ public class MedAlarm implements Serializable {
 
     public int getID() {
         return ID;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String toString() {

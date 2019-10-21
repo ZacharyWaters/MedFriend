@@ -49,7 +49,7 @@ public class AlarmCreator extends AppCompatActivity {
         cancelAlarmButton = findViewById(R.id.cancelAlarmButton);
         Spinner repeatSpinner = findViewById(R.id.repeatSpinner);
 
-        AutoCompleteTextView nameText = findViewById(R.id.autoCompleteName);
+        final AutoCompleteTextView nameText = findViewById(R.id.autoCompleteName);
         ArrayAdapter<String> autoCompleteadapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, MEDICATION_NAMES);
         nameText.setAdapter(autoCompleteadapter);
 
@@ -79,11 +79,13 @@ public class AlarmCreator extends AppCompatActivity {
             }
         });
 
+
         saveAlarmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 //if (year == 0 || hour == 0) {
+                String name = nameText.getText().toString();
 
                 if (year == 0) {
                     Toast.makeText(AlarmCreator.this, "Please select a date and time", Toast.LENGTH_LONG).show();
@@ -107,6 +109,7 @@ public class AlarmCreator extends AppCompatActivity {
                     intent.putExtra("hour", hour);
                     intent.putExtra("minute", minute);
                     intent.putExtra("Interval", repeatinterval);
+                    intent.putExtra("name", name);
                     setResult(1, intent);
                     finish();
                 }

@@ -227,6 +227,7 @@ public class Homepage extends AppCompatActivity {
             int hour = data.getIntExtra("hour", 10);
             int minute = data.getIntExtra("minute", 30);
             int repeatinterval = data.getIntExtra("Interval", 1);
+            String name = data.getStringExtra("name");
 
 
             if (year != 0 && hour != 0 && year != 1920) {
@@ -258,7 +259,7 @@ public class Homepage extends AppCompatActivity {
 
                 am.setRepeating(AlarmManager.RTC_WAKEUP, time, 86400000 / repeatinterval, pendingIntent);
 
-                MedAlarm medalarm = new MedAlarm(year, month, day, hour, minute, repeatinterval, id);
+                MedAlarm medalarm = new MedAlarm(year, month, day, hour, minute, repeatinterval, id, name);
                 alarms.add(medalarm);
 
                 FragmentTransaction fragmenttransaction = fm.beginTransaction();
