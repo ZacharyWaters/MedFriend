@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class PopupActivity extends AppCompatActivity {
 
@@ -21,6 +22,15 @@ public class PopupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_popup);
+
+        TextView alarmName = findViewById(R.id.alarmName);
+
+        Intent intent = getIntent();
+
+        String name = intent.getStringExtra("name");
+        alarmName.setText(name);
+
+
 
         Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         if (alarmUri == null)

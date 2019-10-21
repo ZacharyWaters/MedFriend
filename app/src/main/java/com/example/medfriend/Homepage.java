@@ -257,9 +257,13 @@ public class Homepage extends AppCompatActivity {
                 long time = calendar.getTimeInMillis();
                 Intent in = new Intent(getApplicationContext(), AlarmReceiver.class);
 
+                in.putExtra("name", name);
+
                 int pendingID = (int) (Math.random() * 10);
 
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), id, in, 0);
+
+
 
                 am.setRepeating(AlarmManager.RTC_WAKEUP, time, 86400000 / repeatinterval, pendingIntent);
 
