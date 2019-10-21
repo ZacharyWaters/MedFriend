@@ -214,6 +214,9 @@ public class Homepage extends AppCompatActivity {
                    @Override
                    public void onCancelled(DatabaseError databaseError){}
                 });
+        // This is the end of the Database Fetch
+        // Returning to normal operations below
+        // Mac this is where you will interact with the database
     }
 
 
