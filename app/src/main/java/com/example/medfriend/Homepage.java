@@ -36,7 +36,7 @@ public class Homepage extends AppCompatActivity {
 
     public ArrayList<MedAlarm> alarms;
     private FragmentManager fm;
-    private static int id = 0;
+    private static int id = 1;
 
     int requestCounter;
     int careTakerCount;
@@ -50,14 +50,12 @@ public class Homepage extends AppCompatActivity {
         }
     };
 
-
 //    View.OnClickListener addCaretakerListener = new View.OnClickListener(){
 //        public void  onClick  (View  v){
 //            Intent intent = new Intent(Homepage.this, AddCaretaker.class);
 //            startActivityForResult(intent, 1);
 //        }
 //    };
-
     View.OnClickListener addCaretakerListener = new View.OnClickListener(){
         public void  onClick  (View  v){
             Intent intent = new Intent(Homepage.this, AddCaretaker.class);
@@ -170,7 +168,7 @@ public class Homepage extends AppCompatActivity {
                 Intent in = new Intent(getApplicationContext(), AlarmReceiver.class);
                 int pendingID = (int) (Math.random() * 10);
 
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), id, in, PendingIntent.FLAG_CANCEL_CURRENT);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), id, in, 0);
                 am.setRepeating(AlarmManager.RTC_WAKEUP, time, 86400000 / repeatinterval, pendingIntent);
                 MedAlarm medalarm = new MedAlarm(year, month, day, hour, minute, repeatinterval, id);
                 alarms.add(medalarm);
