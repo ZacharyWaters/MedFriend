@@ -244,6 +244,7 @@ public class Homepage extends AppCompatActivity {
                 firebaseRootRef.child("UsersID&Name").child(activeID).child("Alarms").child(stringAlarmCount).child("hour").setValue(hour);
                 firebaseRootRef.child("UsersID&Name").child(activeID).child("Alarms").child(stringAlarmCount).child("minute").setValue(minute);
                 firebaseRootRef.child("UsersID&Name").child(activeID).child("Alarms").child(stringAlarmCount).child("repeatinterval").setValue(repeatinterval);
+                firebaseRootRef.child("UsersID&Name").child(activeID).child("Alarms").child(stringAlarmCount).child("name").setValue(name);
 
 
 
