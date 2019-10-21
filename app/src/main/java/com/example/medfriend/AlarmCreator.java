@@ -97,7 +97,7 @@ public class AlarmCreator extends AppCompatActivity {
             "Tamsulosin Hydrochloride","Telmisartan","Temazepam","Terazosin","Terbinafine",
             "Testosterone","Thyroid","Timolol","Timolol Maleate","Tiotropium","Tizanidine",
             "Tolterodine Tartrate","Topiramate","Torsemide","Tramadol Hydrochloride","Travoprost",
-            "Trazodone Hydrochloride","Tretinoin","Triamcinolone","Triamterene","Trimethoprim",
+            "Trazodone Hydrochloride","Tretinoin","Triamcinolone","Triamterene","Trimethoprim","Tylenol",
             "Valacyclovir","Valsartan","Venlafaxine Hydrochloride","Verapamil Hydrochloride",
             "Vilazodone Hydrochloride","Vortioxetine Hydrobromide","Warfarin","Zolpidem Tartrate"
     };
