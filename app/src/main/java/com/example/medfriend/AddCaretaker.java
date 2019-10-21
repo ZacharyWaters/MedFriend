@@ -77,7 +77,8 @@ public class AddCaretaker extends AppCompatActivity {
                             if(theirEmail.equalsIgnoreCase(storedEmail)){
                                 wasFound = true;
                                 String activeEmail = ((GlobalVariables) AddCaretaker.this.getApplication()).getCurrentUserEmail();
-                                if(theirEmail.equalsIgnoreCase(activeEmail)){
+                                String activeUserId = ((GlobalVariables) AddCaretaker.this.getApplication()).getCurrentUserID();
+                                if(theirEmail.equalsIgnoreCase(activeUserId)){
                                     Toast.makeText(AddCaretaker.this,
                                             "You cannot add yourself as a caretaker",
                                             Toast.LENGTH_LONG).show();
@@ -90,7 +91,7 @@ public class AddCaretaker extends AppCompatActivity {
                                             //String savedEmails = iterator.toString();
                                             String savedEmails = iterator.getValue().toString();
                                             //Log.d("MYLOG", savedEmails);
-                                            if(savedEmails.equalsIgnoreCase(activeEmail)){
+                                            if(savedEmails.equalsIgnoreCase(activeUserId)){
                                                 duplicate = true;
                                                 break;
                                             }
@@ -108,7 +109,7 @@ public class AddCaretaker extends AppCompatActivity {
                                                 //String savedEmails = iterator.toString();
                                                 String savedEmails = iterator2.getValue().toString();
                                                 //Log.d("MYLOG", savedEmails);
-                                                if(savedEmails.equalsIgnoreCase(activeEmail)){
+                                                if(savedEmails.equalsIgnoreCase(activeUserId)){
                                                     duplicate2 = true;
                                                     break;
                                                 }
@@ -123,7 +124,7 @@ public class AddCaretaker extends AppCompatActivity {
                                             requestCount = requestCount + 1;
                                             String newValue = String.valueOf(requestCount);
                                             firebaseRootRef.child("UsersID&Name").child(key).child("CareTakerUserRequestCount").setValue(newValue);
-                                            firebaseRootRef.child("UsersID&Name").child(key).child("CareTakerUserRequester").child(newValue).setValue(activeEmail);
+                                            firebaseRootRef.child("UsersID&Name").child(key).child("CareTakerUserRequester").child(newValue).setValue(activeUserId);
                                             Toast.makeText(AddCaretaker.this,
                                                     "Caretaker request sent to user",
                                                     Toast.LENGTH_LONG).show();
