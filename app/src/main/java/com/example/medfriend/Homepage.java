@@ -235,6 +235,7 @@ public class Homepage extends AppCompatActivity {
                 ((GlobalVariables) Homepage.this.getApplication()).setCurrentAlarmCount(myAlarmNumber);
                 String stringAlarmCount = String.valueOf(myAlarmNumber);
                 String activeID = ((GlobalVariables) Homepage.this.getApplication()).getCurrentUserID();
+                firebaseRootRef.child("UsersID&Name").child(activeID).child("AlarmNumber").setValue(stringAlarmCount);
                 firebaseRootRef.child("UsersID&Name").child(activeID).child("Alarms").child(stringAlarmCount);
                 firebaseRootRef.child("UsersID&Name").child(activeID).child("Alarms").child(stringAlarmCount).child("year").setValue(year);
                 firebaseRootRef.child("UsersID&Name").child(activeID).child("Alarms").child(stringAlarmCount).child("month").setValue(month);
