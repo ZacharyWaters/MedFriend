@@ -78,7 +78,11 @@ public class Login extends AppCompatActivity {
                             // This Checks if they are both authenticated and Verified
                             if(mAuth.getCurrentUser().isEmailVerified()){
 
-                                // This now saves the users email and password globally for faster checks
+                                // This gets the current user ID
+                                String userId = mAuth.getCurrentUser().getUid();
+
+                                // This now saves the users ID, email, and password globally for faster checks
+                                ((GlobalVariables) Login.this.getApplication()).setCurrentUserID(userId);
                                 ((GlobalVariables) Login.this.getApplication()).setCurrentUserEmail(emailCopy);
                                 ((GlobalVariables) Login.this.getApplication()).setCurrentUserPassword(password);
 

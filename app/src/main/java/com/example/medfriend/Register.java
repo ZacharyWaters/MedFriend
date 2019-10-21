@@ -71,45 +71,92 @@ public class Register extends AppCompatActivity {
             }
         });
 
+        // This is the listener for the register button
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // This makes the progress bar visible
                 progressBar.setVisibility(View.VISIBLE);
+
+                // This extracts the strings from the text-fields
                 final String theirName = nameInput.getText().toString();
                 final String email = emailInput.getText().toString();
                 final String password = passwordInput.getText().toString();
+
+                // This is the default built-in firebase method
+                // for creating users with emails and password
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
+
+                                // The task is to check if the email is valid,
+                                // then it does the verification
                                 if(task.isSuccessful()){
+
+                                    // This sends the default email verification
                                     mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
+
+                                            // This makes the progress bar visible
                                             progressBar.setVisibility(View.GONE);
+
+                                            // The task here is if they can send an
+                                            // email to the account, and registers the user
                                             if(task.isSuccessful()){
+
+                                                // The Toast tells the user the registration is done
+                                                // now you just need to verified
                                                 Toast.makeText(Register.this,
                                                         "Registered Successfully, please check your email for verification",
                                                         Toast.LENGTH_LONG).show();
+
+                                                // The database reference to the UsersID&Name path
                                                 DatabaseReference myRef = database.getReference("UsersID&Name");
+
+                                                // Gets the userId
                                                 String UserId = mAuth.getCurrentUser().getUid();
+
+                                                // Creates the userId and the children values
                                                 myRef.child(UserId);
+
+                                                // This is the user's name
                                                 myRef.child(UserId).child("Name").setValue(theirName);
+
+                                                // This is the user's Email
                                                 myRef.child(UserId).child("Email").setValue(email);
+
+                                                // This is the count of the number of alarms
                                                 myRef.child(UserId).child("AlarmNumber").setValue("0");
+
+                                                // This is the child list of alarms
                                                 myRef.child(UserId).child("Alarms").setValue("");
+
+                                                // This is the count of how many people are requesting caretaker
                                                 myRef.child(UserId).child("CareTakerUserRequestCount").setValue("0");
+
+                                                // This is the child list of requester users
                                                 myRef.child(UserId).child("CareTakerUserRequester").setValue("");
+
+                                                // This is the count of how many people you are care-taking
                                                 myRef.child(UserId).child("CareTakerUserCount").setValue("0");
+
+                                                // This is the child list of care-taking users
                                                 myRef.child(UserId).child("CareTakerUsers").setValue("");
-                                                //myRef.push().child("User|Score").setValue(UserId);
+
+                                                // Empties out the text-fields
                                                 nameInput.setText("");
                                                 passwordInput.setText("");
                                                 emailInput.setText("");
                                             }
                                         }
                                     });
+
                                 } else {
+
+                                    // This Toast handles the exception handling
                                     Toast.makeText(Register.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                 }
                             }

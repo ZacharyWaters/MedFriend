@@ -7,6 +7,8 @@ public class GlobalVariables extends Application {
     private String currentUserName;
     private String currentUserEmail;
     private String currentUserPassword;
+    private String currentUserID;
+    private int alarmCount;
 
     public String getCurrentUserName() {
         return currentUserName;
@@ -20,6 +22,14 @@ public class GlobalVariables extends Application {
         return currentUserPassword;
     }
 
+    public String getCurrentUserID() {
+        return currentUserID;
+    }
+
+    public int getCurrentAlarmCount() {
+        return alarmCount;
+    }
+
     public void setCurrentUserName(String someVariable) {
         this.currentUserName = someVariable;
     }
@@ -31,4 +41,13 @@ public class GlobalVariables extends Application {
     public void setCurrentUserPassword(String someVariable) {
         this.currentUserPassword = someVariable;
     }
+
+    public void setCurrentUserID(String someVariable) {
+        this.currentUserID = someVariable;
+    }
+
+    public void setCurrentAlarmCount(int someVariable) {
+        this.alarmCount = someVariable;
+    }
+
 }
