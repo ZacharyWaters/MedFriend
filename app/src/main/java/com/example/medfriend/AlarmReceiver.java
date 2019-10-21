@@ -7,8 +7,11 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.Toast;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class AlarmReceiver extends BroadcastReceiver
 {
@@ -27,9 +30,11 @@ public class AlarmReceiver extends BroadcastReceiver
         try {
             Bundle bundle = intent.getExtras();
             String message = bundle.getString("alarm_message");
-
+            String name = intent.getStringExtra("name");
+            
             Intent newIntent = new Intent(context, PopupActivity.class);
             newIntent.putExtra("alarm_message", message);
+            newIntent.putExtra("name", name);
             newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             context.startActivity(newIntent);
