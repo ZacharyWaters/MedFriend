@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -33,6 +34,10 @@ public class AlarmCreator extends AppCompatActivity {
     private int year, month, day, hour, minute;
     int repeatinterval = -10;
 
+    private static final String[] MEDICATION_NAMES = new String[]{
+            "Acetaminophen","Amitriptyline", "Aspirin", "Tylenol"
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +48,12 @@ public class AlarmCreator extends AppCompatActivity {
         saveAlarmButton = findViewById(R.id.saveAlarmButton);
         cancelAlarmButton = findViewById(R.id.cancelAlarmButton);
         Spinner repeatSpinner = findViewById(R.id.repeatSpinner);
+
+        AutoCompleteTextView nameText = findViewById(R.id.autoCompleteName);
+        ArrayAdapter<String> autoCompleteadapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, MEDICATION_NAMES);
+        nameText.setAdapter(autoCompleteadapter);
+
+
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.options_array, android.R.layout.simple_spinner_item);
 // Set the layout to use for each dropdown item
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
