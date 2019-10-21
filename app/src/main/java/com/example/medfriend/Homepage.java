@@ -113,6 +113,10 @@ public class Homepage extends AppCompatActivity {
                         // gets the user's care taker count
                         careTakerCount = Integer.parseInt(dataSnapshot.child(activeID).child("CareTakerUserCount").getValue().toString());
 
+                        // gets the user's alarm count
+                        int alarmCount = Integer.parseInt(dataSnapshot.child(activeID).child("AlarmNumber").getValue().toString());
+                        ((GlobalVariables) Homepage.this.getApplication()).setCurrentAlarmCount(alarmCount);
+
                         // if the requestCounter is greater than zero, we iterate through the requests
                         if(requestCounter > 0){
 
@@ -217,15 +221,33 @@ public class Homepage extends AppCompatActivity {
 
 
             if (year != 0 && hour != 0 && year != 1920) {
+                int myAlarmNumber = ((GlobalVariables) Homepage.this.getApplication()).getCurrentAlarmCount();
+                myAlarmNumber = myAlarmNumber + 1;
+                ((GlobalVariables) Homepage.this.getApplication()).setCurrentAlarmCount(myAlarmNumber);
+                String stringAlarmCount = String.valueOf(myAlarmNumber);
+                String activeID = ((GlobalVariables) Homepage.this.getApplication()).getCurrentUserID();
+                firebaseRootRef.child("UsersID&Name").child(activeID).child("Alarms").child(stringAlarmCount);
+                firebaseRootRef.child("UsersID&Name").child(activeID).child("Alarms").child(stringAlarmCount).child("year").setValue(year);
+                firebaseRootRef.child("UsersID&Name").child(activeID).child("Alarms").child(stringAlarmCount).child("month").setValue(month);
+                firebaseRootRef.child("UsersID&Name").child(activeID).child("Alarms").child(stringAlarmCount).child("day").setValue(day);
+                firebaseRootRef.child("UsersID&Name").child(activeID).child("Alarms").child(stringAlarmCount).child("hour").setValue(hour);
+                firebaseRootRef.child("UsersID&Name").child(activeID).child("Alarms").child(stringAlarmCount).child("minute").setValue(minute);
+                firebaseRootRef.child("UsersID&Name").child(activeID).child("Alarms").child(stringAlarmCount).child("repeatinterval").setValue(repeatinterval);
+
+
+
                 Toast.makeText(Homepage.this, "Making Fragment", Toast.LENGTH_LONG).show();
                 AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
                 GregorianCalendar calendar = new GregorianCalendar(year, month, day, hour, minute);
                 long time = calendar.getTimeInMillis();
                 Intent in = new Intent(getApplicationContext(), AlarmReceiver.class);
+
                 int pendingID = (int) (Math.random() * 10);
 
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), id, in, PendingIntent.FLAG_CANCEL_CURRENT);
+
                 am.setRepeating(AlarmManager.RTC_WAKEUP, time, 86400000 / repeatinterval, pendingIntent);
+
                 MedAlarm medalarm = new MedAlarm(year, month, day, hour, minute, repeatinterval, id);
                 alarms.add(medalarm);
 
