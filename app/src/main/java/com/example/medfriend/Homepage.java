@@ -136,13 +136,19 @@ public class Homepage extends AppCompatActivity {
                                 final String secondKey = iterator.getKey();
 
                                 // This gets the email of the requester
+                                // this has been updated during sprint 3 to instead be the userID value
+                                // everything else still works as intended
                                 final String savedEmails = iterator.getValue().toString();
+
+                                // This is the actual email String of the user, used for the request
+                                // popup only now
+                                String realEmailString = dataSnapshot.child(savedEmails).child("Email").getValue().toString();
 
                                 // This creates the alert for accepting or rejecting caretaker requests
                                 AlertDialog.Builder altdial = new AlertDialog.Builder(Homepage.this);
 
                                 //  This creates the dialog for accepting or rejecting caretaker requests
-                                altdial.setMessage("Do you want to be the Caretaker for user: " +savedEmails).
+                                altdial.setMessage("Do you want to be the Caretaker for user: " +realEmailString).
 
                                         // This makes it so you can't cancel out of the alt-dial
                                         setCancelable(false).
