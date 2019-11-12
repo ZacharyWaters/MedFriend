@@ -119,7 +119,7 @@ public class AlarmCreator extends AppCompatActivity {
 
 
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.options_array, android.R.layout.simple_spinner_item);
-// Set the layout to use for each dropdown item
+        // Set the layout to use for each dropdown item
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         repeatSpinner.setAdapter(adapter);

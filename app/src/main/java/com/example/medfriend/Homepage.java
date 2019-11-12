@@ -71,7 +71,7 @@ public class Homepage extends AppCompatActivity {
     View.OnClickListener addCaretakerListener = new View.OnClickListener(){
         public void  onClick  (View  v){
             Intent intent = new Intent(Homepage.this, AddCaretaker.class);
-            startActivityForResult(intent, 1);
+            startActivity(intent);
         }
     };
 
