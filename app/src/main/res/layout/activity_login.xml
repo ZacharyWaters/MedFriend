@@ -16,10 +16,10 @@
 
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="250dp"
+            android:layout_width="297dp"
+            android:layout_height="212dp"
             android:layout_gravity="center_horizontal"
-            android:layout_height="148dp"
-            app:srcCompat="@drawable/logotransparent" />
+            app:srcCompat="@drawable/better_logo_transparent" />
 
         <TableLayout
             android:layout_width="match_parent"
