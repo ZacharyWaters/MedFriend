@@ -31,7 +31,7 @@ public class Login extends AppCompatActivity {
 
     // Buttons
     Button loginButton;
-    Button forgottenButton;
+    ImageButton forgottenButton;
     Button registerButton;
 
     @Override

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true"
+    android:background="#D7F9FF"
     tools:context=".Login">
 
     <LinearLayout
@@ -19,7 +20,7 @@
             android:layout_width="297dp"
             android:layout_height="212dp"
             android:layout_gravity="center_horizontal"
-            app:srcCompat="@drawable/better_logo_transparent" />
+            app:srcCompat="@drawable/logotransparent" />
 
         <TableLayout
             android:layout_width="match_parent"
@@ -94,13 +95,27 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal">
 
-                <Button
-                    android:id="@+id/forgotButton"
+                <Space
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Forgot Password"
-                    android:layout_gravity="start"
-                    android:textSize="20sp" />
+                    android:layout_height="wrap_content" />
+
+                <ImageButton
+                    android:id="@+id/forgotButton"
+                    android:layout_width="224dp"
+                    android:layout_height="32dp"
+
+                    android:background="#00FFFFFF"
+                    android:baselineAlignBottom="false"
+                    android:cropToPadding="false"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/forgotpasswordtransparent2" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
 
                 <Button
                     android:id="@+id/loginButton"
@@ -110,17 +125,6 @@
                     android:text="Login"
                     android:textSize="20sp" />
 
-            </TableRow>
-
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
                 <Button
                     android:id="@+id/registerButton"
                     android:layout_width="wrap_content"
@@ -128,6 +132,7 @@
                     android:layout_gravity="end"
                     android:text="Register"
                     android:textSize="20dp" />
+
             </TableRow>
 
         </TableLayout>
