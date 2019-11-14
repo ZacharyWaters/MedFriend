@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class LandingScreen extends AppCompatActivity {
 
@@ -119,17 +121,44 @@ public class LandingScreen extends AppCompatActivity {
             ArrayList <String> extractedTimes = data.getStringArrayListExtra("Times");
             boolean [] extractedDaysofWeek = data.getBooleanArrayExtra("Weekdays");
 
+            // Gets the current Time to use as as the key for the new ExampleAlarm
+            Calendar calendar = Calendar.getInstance();
+            //Returns current time in millis
+            long timeMilli = calendar.getTimeInMillis();
+            //Converts that millisecond value into a String for the key
+            String timeDatabaseKey = Long.toString(timeMilli);
+
             // Creates a new alarm recycler item
-            ExampleAlarm providedAlarm = new ExampleAlarm(extractedName, extractedDaysofWeek, extractedTimes);
+            ExampleAlarm providedAlarm = new ExampleAlarm(extractedName, extractedDaysofWeek, extractedTimes, timeDatabaseKey);
+
+            // Creates a Database Element for the Alarm Like So
+            //   - Alarms
+            //        -Key(Date Made)
+            //              -Name
+            //              -DaysOfWeek, as 0101010 String 0 meaning off, 1 meaning on
+            //              -Times
+            //                     -time
 
             // adds the new alarm recycler to the array
             insertItem(0,providedAlarm);
 
             // Updates the Warning Text
             checkWarningTextVisible();
-
-            // Creates an actual alarm object
         }
+    }
+
+    // Listener for the android back button
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Toast.makeText(LandingScreen.this,
+                "logging out",
+                Toast.LENGTH_LONG).show();
+
+        Intent signOutintent = new Intent(LandingScreen.this, Login.class);
+        startActivity(signOutintent);
+
+
     }
 
     @Override

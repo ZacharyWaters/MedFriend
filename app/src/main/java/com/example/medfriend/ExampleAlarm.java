@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class ExampleAlarm implements Parcelable {
 
+    private String alarmDatabaseID;
     private String alarmName;
     private boolean isMonday;
     private boolean isTuesday;
@@ -22,7 +23,7 @@ public class ExampleAlarm implements Parcelable {
     private ArrayList<String> setTimes;
 
     // Constructor for this class
-    public ExampleAlarm(String inputAlarmName, boolean[] inputDaysOfWeek, ArrayList<String> inputTimes){
+    public ExampleAlarm(String inputAlarmName, boolean[] inputDaysOfWeek, ArrayList<String> inputTimes, String inputAlarmDatabaseID){
         alarmName = inputAlarmName;
         isMonday = inputDaysOfWeek[0];
         isTuesday = inputDaysOfWeek[1];
@@ -31,12 +32,12 @@ public class ExampleAlarm implements Parcelable {
         isFriday = inputDaysOfWeek[4];
         isSaturday = inputDaysOfWeek[5];
         isSunday = inputDaysOfWeek[6];
-
         setTimes = inputTimes;
+        alarmDatabaseID = inputAlarmDatabaseID;
     }
 
     // Master Updater for All, big setter basically
-    public void masterUpdate(String inputAlarmName, boolean[] inputDaysOfWeek, ArrayList<String> inputTimes){
+    public void masterUpdate(String inputAlarmName, boolean[] inputDaysOfWeek, ArrayList<String> inputTimes, String inputAlarmDatabaseID){
 
         // Resets the alarm name
         alarmName = inputAlarmName;
@@ -49,8 +50,8 @@ public class ExampleAlarm implements Parcelable {
         isFriday = inputDaysOfWeek[4];
         isSaturday = inputDaysOfWeek[5];
         isSunday = inputDaysOfWeek[6];
-
         setTimes = inputTimes;
+        alarmDatabaseID = inputAlarmDatabaseID;
     }
 
 
@@ -89,6 +90,10 @@ public class ExampleAlarm implements Parcelable {
 
     public void setSetTimes(ArrayList<String> setTimes) {
         this.setTimes = setTimes;
+    }
+
+    public void setAlarmDatabaseID(String userInputAlarmDatabaseId){
+        alarmDatabaseID = userInputAlarmDatabaseId;
     }
     // End of Setters -----------------------------------------------------------------------------
 
@@ -134,6 +139,10 @@ public class ExampleAlarm implements Parcelable {
 
     public ArrayList<String> getSetTimes() {
         return setTimes;
+    }
+
+    public String getAlarmDatabaseID(){
+        return alarmDatabaseID;
     }
 
     // End of Getters -----------------------------------------------------------------------------
