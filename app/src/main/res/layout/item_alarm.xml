@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="8dp"
+    android:paddingEnd="1dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="2dp"
+    android:foreground="?selectableItemBackground"
+    android:clickable="true">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/listPreferredItemHeight" >
+
+        <TextView
+            android:id="@+id/ar_Name_1"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:gravity="start|bottom"
+            android:textSize="12sp"
+            android:layout_gravity="center_vertical"
+            android:layout_centerVertical="true"
+            tools:text="Alarm Name"
+            android:paddingRight="4dp"/>
+
+        <LinearLayout
+            android:id="@+id/layoutStrings"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_gravity="center_vertical"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/ar_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="12:00am, 12:00am, 11:00am"/>
+
+            <TextView
+                android:id="@+id/ar_days"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="M Tu W Th F Sa Su"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:id="@+id/buttonLinear"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/arEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_menu_preferences" />
+
+            <ImageButton
+                android:id="@+id/arDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_menu_delete" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="2dp"
+        android:background="@drawable/divider" />
+
+
+</LinearLayout>

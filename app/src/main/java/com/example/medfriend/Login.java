@@ -86,8 +86,12 @@ public class Login extends AppCompatActivity {
                                 ((GlobalVariables) Login.this.getApplication()).setCurrentUserEmail(emailCopy);
                                 ((GlobalVariables) Login.this.getApplication()).setCurrentUserPassword(password);
 
+                                // Clear the login values
+                                emailInput.setText("");
+                                passwordInput.setText("");
+
                                 // This Sends them to the homepage
-                                startActivity(new Intent(Login.this, Homepage.class));
+                                startActivity(new Intent(Login.this, LandingScreen.class));
 
                             } else {
 

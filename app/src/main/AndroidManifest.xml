@@ -3,14 +3,18 @@
     package="com.example.medfriend">
 
     <application
+        android:name=".GlobalVariables"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:name=".GlobalVariables"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddCaretaker"></activity>
+        <activity android:name=".TimeCreatorActivity"></activity>
+        <activity android:name=".AlarmTrigger" />
+        <activity android:name=".AlarmActivity" />
+        <activity android:name=".LandingScreen" />
+        <activity android:name=".AddCaretaker" />
         <activity
             android:name=".PopupActivity"
             android:label="@string/title_activity_popup"
@@ -27,6 +31,9 @@
             </intent-filter>
         </activity>
 
+        <receiver
+            android:name=".zAlarmReciever"
+            android:exported="true" />
         <receiver
             android:name=".AlarmReceiver"
             android:process=":remote" />

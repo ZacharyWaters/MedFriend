@@ -19,6 +19,7 @@ public class AlarmReceiver extends BroadcastReceiver
     public void onReceive(Context context, Intent intent)
     {
         Toast.makeText(context, "Alarm! Take your medicine!", Toast.LENGTH_LONG).show();
+
 //        Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
 //        if (alarmUri == null)
 //        {

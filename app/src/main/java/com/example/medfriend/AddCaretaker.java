@@ -25,7 +25,7 @@ public class AddCaretaker extends AppCompatActivity {
     Button cancelButton;
     View.OnClickListener cancelListener = new View.OnClickListener(){
         public void  onClick  (View  v){
-            startActivity(new Intent(AddCaretaker.this, Homepage.class));
+            startActivity(new Intent(AddCaretaker.this, LandingScreen.class));
         }
     };
     Button requestButton;
