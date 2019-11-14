@@ -36,6 +36,10 @@ public class AlarmReceiver extends BroadcastReceiver
             Intent newIntent = new Intent(context, PopupActivity.class);
             newIntent.putExtra("alarm_message", message);
             newIntent.putExtra("name", name);
+            // Get the current Time and Pass that along too
+            // that will be used at the key for the timelineMark in the database
+
+
             newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             context.startActivity(newIntent);

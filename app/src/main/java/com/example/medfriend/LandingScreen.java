@@ -137,7 +137,25 @@ public class LandingScreen extends AppCompatActivity {
             //              -Name
             //              -DaysOfWeek, as 0101010 String 0 meaning off, 1 meaning on
             //              -Times
-            //                     -time
+            //                     -time: HourOfDay@Minute
+
+            String databaseWeekdays = zHelperMethods.turnWeekdayBoolsintoDatabaseString(extractedDaysofWeek);
+
+            // Gets the active userId to properly put into the database
+            String activeID = ((GlobalVariables) LandingScreen.this.getApplication()).getCurrentUserID();
+            firebaseRootRef.child("UsersID&Name").child(activeID).child("Alarms").child(timeDatabaseKey);
+            firebaseRootRef.child("UsersID&Name").child(activeID).child("Alarms").child(timeDatabaseKey).child("Name").setValue(extractedName);
+            firebaseRootRef.child("UsersID&Name").child(activeID).child("Alarms").child(timeDatabaseKey).child("Weekdays").setValue(databaseWeekdays);
+            firebaseRootRef.child("UsersID&Name").child(activeID).child("Alarms").child(timeDatabaseKey).child("Times");
+
+            // Loops through the times and adds them to the database
+            for(int i = 0; i < extractedTimes.size(); i++) {
+                String timeElement = extractedTimes.get(i);
+                String concatenatedTime = zHelperMethods.turnNaturalTimeintoConcatenatedDatabaseText(timeElement);
+                firebaseRootRef.child("UsersID&Name").child(activeID).child("Alarms").child(timeDatabaseKey).child("Times").child(timeElement).setValue(concatenatedTime);
+            }
+
+
 
             // adds the new alarm recycler to the array
             insertItem(0,providedAlarm);
