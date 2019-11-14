@@ -13,6 +13,9 @@ import android.widget.TextView;
 import android.os.Handler;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class AlarmTrigger extends AppCompatActivity {
 
     // Static Text View
@@ -28,6 +31,14 @@ public class AlarmTrigger extends AppCompatActivity {
     // Handler, this is used to time out the alarm
     Handler testHandler = new Handler();
 
+    // This is the Firebase Database
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    DatabaseReference firebaseRootRef = firebaseDatabase.getReference();
+
+    String alarmName;
+    String databaseTimeKey;
+
+
 
     // Listener for the skip button
     View.OnClickListener skipMedicineListener = new View.OnClickListener(){
@@ -35,6 +46,13 @@ public class AlarmTrigger extends AppCompatActivity {
             theTone.stop();
             // Remove any Lingering Handlers
             testHandler.removeCallbacks(shortTimerRunnable);
+
+            // Adds a Timeline mark to the Database
+            String activeID = ((GlobalVariables) AlarmTrigger.this.getApplication()).getCurrentUserID();
+            String negativeMark = alarmName + "|" +"SKIPPED";
+            firebaseRootRef.child("UsersID&Name").child(activeID).child("TimelineMarks").child(databaseTimeKey).setValue(negativeMark);
+
+
             Intent intent = new Intent(AlarmTrigger.this, LandingScreen.class);
             startActivity(intent);
         }
@@ -46,6 +64,12 @@ public class AlarmTrigger extends AppCompatActivity {
             theTone.stop();
             // Remove any Lingering Handlers
             testHandler.removeCallbacks(shortTimerRunnable);
+
+            // Adds a Timeline mark to the Database
+            String activeID = ((GlobalVariables) AlarmTrigger.this.getApplication()).getCurrentUserID();
+            String positiveMark = alarmName + "|" +"TAKEN";
+            firebaseRootRef.child("UsersID&Name").child(activeID).child("TimelineMarks").child(databaseTimeKey).setValue(positiveMark);
+
             Intent intent = new Intent(AlarmTrigger.this, LandingScreen.class);
             startActivity(intent);
         }
@@ -86,8 +110,11 @@ public class AlarmTrigger extends AppCompatActivity {
 
         // renames the static text field
         Intent triggerIntent = getIntent();
-        String alarmName = triggerIntent.getStringExtra("name");
+        alarmName = triggerIntent.getStringExtra("name");
         staticTriggerText.setText("It is time to take " +alarmName);
+
+        // Gets the timeKey from the intent
+        databaseTimeKey = triggerIntent.getStringExtra("timeKey");
 
         // Creates a Timer that goes off after a waiting period, triggering the skip button
         // 30000 milliseconds is 30 seconds

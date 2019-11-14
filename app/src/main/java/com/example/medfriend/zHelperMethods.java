@@ -51,4 +51,17 @@ public class zHelperMethods {
         String returnBlock = realHourText+"@"+minuteText;
         return returnBlock;
     }
+
+    public static boolean[] turnStringWeekdaytoBoolArray(String boolString){
+        boolean[] returnBoolArray = new boolean[7];
+        for (int i = 0; i < boolString.length(); i++){
+            char c = boolString.charAt(i);
+            if(c == '0'){
+                returnBoolArray[i] = false;
+            } else {
+                returnBoolArray[i] = true;
+            }
+        }
+        return returnBoolArray;
+    }
 }

@@ -230,7 +230,48 @@ public class LandingScreen extends AppCompatActivity {
 
                         // gets the user's alarm count
                         int alarmCount = Integer.parseInt(dataSnapshot.child(activeID).child("AlarmNumber").getValue().toString());
+
+                        // Sets the user's global alarm count
                         ((GlobalVariables) LandingScreen.this.getApplication()).setCurrentAlarmCount(alarmCount);
+
+                        // Loops through the user's alarms and adds them to the Homepage
+                        for (DataSnapshot alarmDatabaseIterator : dataSnapshot.child(activeID).child("Alarms").getChildren()){
+                            String extractedAlarmKey = alarmDatabaseIterator.getKey();
+                            String extractedAlarmName = alarmDatabaseIterator.child("Name").getValue().toString();
+                            String extractedWeekdaysString = alarmDatabaseIterator.child("Weekdays").getValue().toString();
+                            //Converts the Weekdays into an array
+                            boolean[] extractWeekdayArray = zHelperMethods.turnStringWeekdaytoBoolArray(extractedWeekdaysString);
+
+                            // makes array list of String times
+                            ArrayList<String> extractedTimes2 = new ArrayList<>();
+
+                            // Loops through the times field
+                            for (DataSnapshot timesIterator : dataSnapshot.child(activeID).child("Alarms").child(extractedAlarmKey).child("Times").getChildren()){
+
+                                // gets the key value from each item in this field
+                                String extractedSingleTime = timesIterator.getKey();
+
+                                // adds that to the array
+                                extractedTimes2.add(extractedSingleTime);
+
+                            }
+
+                             // Sets the alarms
+                             // will need to keep an active list of the ones that are set to prevent "resetting them"
+                            // so i propose a global list of alarmKey's that you simply search though
+                            // you will have to update such a list in two locations, at the homepage after the leave the edit/create/delete screen
+                            // or when you start up the app
+
+                             // Creates a new alarm recycler item
+                            ExampleAlarm providedAlarm = new ExampleAlarm(extractedAlarmName, extractWeekdayArray, extractedTimes2, extractedAlarmKey);
+
+                             // adds the new alarm recycler to the array
+                            insertItem(0,providedAlarm);
+
+                             // Updates the Warning Text
+                            checkWarningTextVisible();
+
+                        }
 
                         // if the requestCounter is greater than zero, we iterate through the requests
                         if(requestCounter > 0){

@@ -70,6 +70,16 @@ public class zAlarmReciever extends BroadcastReceiver
             // newIntent.putExtra("alarm_message", message);
             newIntent.putExtra("name", alarmName);
 
+            // Get the current Time and Pass that along too
+            // that will be used at the key for the timelineMark in the database
+            Calendar calendar = Calendar.getInstance();
+            //Returns current time in millis
+            long timeMilli = calendar.getTimeInMillis();
+            //Converts that millisecond value into a String for the key
+            String timeDatabaseKey = Long.toString(timeMilli);
+            newIntent.putExtra("timeKey", timeDatabaseKey);
+
+
             // This flags the intent as SUPER IMPORTANT
             newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
