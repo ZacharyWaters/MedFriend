@@ -33,16 +33,10 @@ public class ExampleAlarm implements Parcelable {
         isSunday = inputDaysOfWeek[6];
 
         setTimes = inputTimes;
-        //setTimes.add("4:00PM");
-//        for(int i = 0; i < inputTimes.length; i++){
-//            String inputTimeString = inputTimes[i];
-//            setTimes.add(inputTimeString);
-//        }
-
     }
 
     // Master Updater for All, big setter basically
-    public void masterUpdate(String inputAlarmName, boolean[] inputDaysOfWeek, String[] inputTimes){
+    public void masterUpdate(String inputAlarmName, boolean[] inputDaysOfWeek, ArrayList<String> inputTimes){
 
         // Resets the alarm name
         alarmName = inputAlarmName;
@@ -56,13 +50,7 @@ public class ExampleAlarm implements Parcelable {
         isSaturday = inputDaysOfWeek[5];
         isSunday = inputDaysOfWeek[6];
 
-//        // Clears out the array, making it entirely empty
-//        setTimes.clear();
-//        for(int i = 0; i < inputTimes.length; i++){
-//            String inputTimeString = inputTimes[i];
-//            setTimes.add(inputTimeString);
-//        }
-
+        setTimes = inputTimes;
     }
 
 
