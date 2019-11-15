@@ -311,6 +311,7 @@ public class AlarmActivity extends AppCompatActivity {
 
                 AlarmInitializer.setAlarmClosestTime(extractedName, weekDatesArray, exampleTimeArraylist, getApplicationContext());
 
+
 //                // This will have to be massively reworked and entirely retooled
 //                AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
 //                //AlarmManager am = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
