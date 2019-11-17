@@ -394,7 +394,7 @@ public class LandingScreen extends AppCompatActivity {
 
                                                 // Stores you in their Database as TheirCareTaker
                                                 String activeEmail = ((GlobalVariables) LandingScreen.this.getApplication()).getCurrentUserEmail();
-                                                firebaseRootRef.child("UsersID&Name").child(savedEmails).child("MyCareTakers").child(activeID).setValue(activeEmail);
+                                                firebaseRootRef.child("UsersID&Name").child(savedEmails).child("MyCaretakers").child(activeID).setValue(activeEmail);
 
 
                                                 // Closes the Dialog Box
