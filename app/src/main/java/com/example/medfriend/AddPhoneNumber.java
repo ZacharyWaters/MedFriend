@@ -32,9 +32,8 @@ public class AddPhoneNumber extends AppCompatActivity {
                 number = phoneField.getText().toString();
                 number = "+1" + number;
                 //TODO: Zach does database calls here
-                String activeEmail = ((GlobalVariables) AddPhoneNumber.this.getApplication()).getCurrentUserEmail();
                 String activeUserId = ((GlobalVariables) AddPhoneNumber.this.getApplication()).getCurrentUserID();
-                firebaseRootRef.child("UsersID&Name").child(activeUserId).child("PhoneNumbers").child(number).setValue(number);
+                firebaseRootRef.child("UsersID&Name").child(activeUserId).child("PhoneNumber").setValue(number);
                 finish();
             }
         });
