@@ -1,10 +1,12 @@
 package com.example.medfriend;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.Ringtone;
@@ -12,14 +14,20 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.os.Handler;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class AlarmTrigger extends AppCompatActivity {
 
@@ -44,6 +52,9 @@ public class AlarmTrigger extends AppCompatActivity {
 
     String alarmName;
     String databaseTimeKey;
+
+    // This is the phone number Array
+    ArrayList<String> phoneNumbers = new ArrayList<>();
 
 
 
@@ -85,9 +96,43 @@ public class AlarmTrigger extends AppCompatActivity {
                 // Permission has already been granted
             }
 
+            // Gets an arrayList of phone numbers from the database of the people you are to text
+            FirebaseDatabase.getInstance().getReference().child("UsersID&Name").
+                    addListenerForSingleValueEvent(new ValueEventListener() {
 
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage("+16785446219", null, "sms message", null, null);
+                        //The On dataChange Method
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            // Loops through and creates a list of all the caretaker's ID's you will visit
+                            ArrayList<String> careTakersID = new ArrayList<>();
+                            String activeUserId = ((GlobalVariables) AlarmTrigger.this.getApplication()).getCurrentUserID();
+                            for (DataSnapshot caretaker : dataSnapshot.child(activeUserId).child("CareTakerUsers").getChildren()){
+                                String idToAdd = caretaker.getValue().toString();
+                                careTakersID.add(idToAdd);
+                            }
+
+                            for(int i = 0; i < careTakersID.size(); i++){
+                                String checkId = careTakersID.get(i);
+                                String maybePhoneNumber = dataSnapshot.child(checkId).child("phoneNumber").getValue().toString();
+                                if (maybePhoneNumber != null && !maybePhoneNumber.isEmpty()) {
+                                    phoneNumbers.add(maybePhoneNumber);
+                                }
+                            }
+
+
+                        }
+
+                        // This is the database Error Handler
+                        @Override
+                        public void onCancelled(DatabaseError databaseError){}
+                    });
+
+            Log.d("error", phoneNumbers.get(0));
+            for (String item : phoneNumbers) {
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(item, null, "I lost my medicine just now", null, null);
+
+            }
 
 
             Intent intent = new Intent(AlarmTrigger.this, LandingScreen.class);
