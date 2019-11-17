@@ -12,6 +12,15 @@ public class GlobalVariables extends Application {
     private String currentUserID;
     private int alarmCount;
     private ArrayList<String> activatedAlarms = new ArrayList<>();
+    private ArrayList<String> phoneNumbers = new ArrayList<>();
+
+    public void updateNumbers(ArrayList<String> a) {
+        phoneNumbers = a;
+    }
+
+    public ArrayList<String> getNumbers() {
+        return phoneNumbers;
+    }
 
     public String getCurrentUserName() {
         return currentUserName;

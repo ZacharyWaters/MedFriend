@@ -54,7 +54,7 @@ public class AlarmTrigger extends AppCompatActivity {
     String databaseTimeKey;
 
     // This is the phone number Array
-    ArrayList<String> phoneNumbers = new ArrayList<>();
+    static ArrayList<String> phoneNumbers = new ArrayList<>();
 
 
 
@@ -107,21 +107,29 @@ public class AlarmTrigger extends AppCompatActivity {
                             ArrayList<String> careTakersID = new ArrayList<>();
                             String activeUserId = ((GlobalVariables) AlarmTrigger.this.getApplication()).getCurrentUserID();
                             for (DataSnapshot caretaker : dataSnapshot.child(activeUserId).child("MyCaretakers").getChildren()){
-                                Log.d("ZZZ", ":)");
+                              //  Log.d("ZZZ", ":)");
                                 String idToAdd = caretaker.getKey();
                                 careTakersID.add(idToAdd);
                             }
 
-                            Log.d("ll", String.valueOf(careTakersID.size()));
+                            //Log.d("ll", String.valueOf(careTakersID.size()));
+                            ArrayList<String> phoneNumbers = new ArrayList<>();
                             for(int i = 0; i < careTakersID.size(); i++){
                                 String checkId = careTakersID.get(i);
 
                                 String maybePhoneNumber = dataSnapshot.child(checkId).child("PhoneNumber").getValue().toString();
                                 Log.d("lll", maybePhoneNumber);
-                                phoneNumbers.add("+16787612383");
+                                phoneNumbers.add(maybePhoneNumber);
                                 Log.d("after", ":((((((");
                                 Log.d("after2", String.valueOf(phoneNumbers.size()));
 
+                            }
+
+                            for (int i = 0; i < phoneNumbers.size(); i++) {
+                                SmsManager smsManager = SmsManager.getDefault();
+                                //Log.d("lllll", phoneNumbers.get(i));
+
+                                smsManager.sendTextMessage(phoneNumbers.get(i), null, "I forgot to take my medicine just now, please check on me", null, null);
                             }
 
 
@@ -131,15 +139,6 @@ public class AlarmTrigger extends AppCompatActivity {
                         @Override
                         public void onCancelled(DatabaseError databaseError){}
                     });
-            phoneNumbers.add("+16787612383");
-            Log.d("lllll", String.valueOf(phoneNumbers.size()));
-
-            for (int i = 0; i < phoneNumbers.size(); i++) {
-                SmsManager smsManager = SmsManager.getDefault();
-                Log.d("lllll", phoneNumbers.get(i));
-
-                smsManager.sendTextMessage(phoneNumbers.get(i), null, "I forgot to take my medicine just now, please check on me", null, null);
-            }
 
 
             Intent intent = new Intent(AlarmTrigger.this, LandingScreen.class);
