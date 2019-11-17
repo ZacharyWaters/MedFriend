@@ -61,7 +61,7 @@ public class AddCaretaker extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final String theirEmail = emailInput.getText().toString();
-                final String theirNumber = numberInput.getText().toString();
+                //final String theirNumber = numberInput.getText().toString();
 
                 FirebaseDatabase.getInstance().getReference().child("UsersID&Name").
                         addListenerForSingleValueEvent(new ValueEventListener() {
