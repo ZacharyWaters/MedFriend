@@ -20,7 +20,7 @@
             android:id="@+id/phoneButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add Caretaker Phone Number" />
+            android:text="Add Contact Phone Number" />
 
         <Button
             android:id="@+id/cancelButton"
