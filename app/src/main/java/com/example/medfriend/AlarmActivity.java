@@ -307,9 +307,21 @@ public class AlarmActivity extends AppCompatActivity {
 
                 intentToReturnByAccept.putExtra("Times", extractedTimes);
 
+                // Gets the current Time to use as as the key for the new ExampleAlarm
+                Calendar calendar = Calendar.getInstance();
+
+                // Returns current time in millis
+                long timeMilli = calendar.getTimeInMillis();
+
+                // Converts that millisecond value into a String for the key
+                String alarmKeyString = Long.toString(timeMilli);
+
+                // Adds the alarmKeyString to the Intent to be passed to te Landing Screen Class
+                intentToReturnByAccept.putExtra("alarmKey", alarmKeyString);
+
                 // Creating the actual alarm #################################################################
 
-                AlarmInitializer.setAlarmClosestTime(extractedName, weekDatesArray, exampleTimeArraylist, getApplicationContext());
+                AlarmInitializer.setAlarmClosestTime(extractedName, weekDatesArray, exampleTimeArraylist, getApplicationContext(), alarmKeyString);
 
 
 //                // This will have to be massively reworked and entirely retooled

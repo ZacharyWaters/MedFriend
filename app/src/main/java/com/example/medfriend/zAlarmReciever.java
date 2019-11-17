@@ -37,6 +37,7 @@ public class zAlarmReciever extends BroadcastReceiver
         String virtualTimes = bundle.getString("virtualTimes");
         ArrayList<ExampleTime> reconstructedTimes = new ArrayList<ExampleTime>();
         String[] tempArray1 = virtualTimes.split("#");
+        String alarmKeyString = bundle.getString("alarmKey");
 
         // Reconstructs the virtual time arraylist
         for(int i = 0; i < tempArray1.length; i ++){
@@ -50,7 +51,7 @@ public class zAlarmReciever extends BroadcastReceiver
         }
 
         // Uses this information to create a new alarm
-        AlarmInitializer.setAlarmClosestTime(alarmName, daysOfWeek, reconstructedTimes, context);
+        AlarmInitializer.setAlarmClosestTime(alarmName, daysOfWeek, reconstructedTimes, context, alarmKeyString);
 
 
         // This makes a Toast that Appears with the message "Take your medicine"

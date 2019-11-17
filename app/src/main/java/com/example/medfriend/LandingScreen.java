@@ -120,13 +120,7 @@ public class LandingScreen extends AppCompatActivity {
             String extractedName = data.getStringExtra("Name");
             ArrayList <String> extractedTimes = data.getStringArrayListExtra("Times");
             boolean [] extractedDaysofWeek = data.getBooleanArrayExtra("Weekdays");
-
-            // Gets the current Time to use as as the key for the new ExampleAlarm
-            Calendar calendar = Calendar.getInstance();
-            //Returns current time in millis
-            long timeMilli = calendar.getTimeInMillis();
-            //Converts that millisecond value into a String for the key
-            String timeDatabaseKey = Long.toString(timeMilli);
+            String timeDatabaseKey = data.getStringExtra("alarmKey");
 
             // Creates a new alarm recycler item
             ExampleAlarm providedAlarm = new ExampleAlarm(extractedName, extractedDaysofWeek, extractedTimes, timeDatabaseKey);
@@ -159,8 +153,11 @@ public class LandingScreen extends AppCompatActivity {
             // adds the new alarm recycler to the array
             insertItem(0,providedAlarm);
 
+
+
             ///*** now we need to add this alarm to the "ActiveAlarmsList"
             ///*** you can do this by simply adding the key to the globalArrayList
+            ((GlobalVariables) LandingScreen.this.getApplication()).addActiveAlarm(timeDatabaseKey);
 
             // Updates the Warning Text
             checkWarningTextVisible();
@@ -249,16 +246,46 @@ public class LandingScreen extends AppCompatActivity {
                             // makes array list of String times
                             ArrayList<String> extractedTimes2 = new ArrayList<>();
 
+                            // ArrayList of Example Time Objects:
+                            ArrayList<ExampleTime> initializedExampleTimesList = new ArrayList<>();
+
                             // Loops through the times field
                             for (DataSnapshot timesIterator : dataSnapshot.child(activeID).child("Alarms").child(extractedAlarmKey).child("Times").getChildren()){
 
                                 // gets the key value from each item in this field
                                 String extractedSingleTime = timesIterator.getKey();
 
+                                String extractedRawTimesConcatString = timesIterator.getValue().toString();
+
+                                String[] extractedRawTimex = extractedRawTimesConcatString.split("@");
+
+                                int extractedHoursOfDay = Integer.valueOf(extractedRawTimex[0]);
+                                int extractedMinutes = Integer.valueOf(extractedRawTimex[1]);
+
+                                ExampleTime exampleTimeFromDatabase = new ExampleTime(extractedSingleTime,extractedHoursOfDay, extractedMinutes);
+
+                                initializedExampleTimesList.add(exampleTimeFromDatabase);
+
                                 // adds that to the array
                                 extractedTimes2.add(extractedSingleTime);
 
                             }
+
+                            // CHECK IF DUPLICATE
+                            boolean alreadyFired = ((GlobalVariables) LandingScreen.this.getApplication()).doesActiveAlarmsContain(extractedAlarmKey);
+
+                            // IF NOT A DUPLICATE:
+                            if(alreadyFired == false){
+
+                                // ADD TO LIST
+                                ((GlobalVariables) LandingScreen.this.getApplication()).addActiveAlarm(extractedAlarmKey);
+
+                                // FIRE ALARM
+                                AlarmInitializer.setAlarmClosestTime(extractedAlarmName, extractWeekdayArray, initializedExampleTimesList, getApplicationContext(), extractedAlarmKey);
+                            }
+                                    // ADD TO LIST
+
+                                    // FIRE ALARM
 
                             ///*** Activate the alarm by calling:
                             ///*** AlarmInitializer.setAlarmClosestTime(extractedName, extractedDaysofWeek, YYYY, getApplicationContext());

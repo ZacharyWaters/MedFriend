@@ -2,6 +2,8 @@ package com.example.medfriend;
 
 import android.app.Application;
 
+import java.util.ArrayList;
+
 public class GlobalVariables extends Application {
 
     private String currentUserName;
@@ -9,6 +11,7 @@ public class GlobalVariables extends Application {
     private String currentUserPassword;
     private String currentUserID;
     private int alarmCount;
+    private ArrayList<String> activatedAlarms = new ArrayList<>();
 
     public String getCurrentUserName() {
         return currentUserName;
@@ -48,6 +51,20 @@ public class GlobalVariables extends Application {
 
     public void setCurrentAlarmCount(int someVariable) {
         this.alarmCount = someVariable;
+    }
+
+    public void addActiveAlarm(String newAlarmKey){
+        activatedAlarms.add(newAlarmKey);
+    }
+    public boolean doesActiveAlarmsContain(String AlarmKey){
+        if(activatedAlarms.contains(AlarmKey)){
+            return true;
+        } else{
+            return false;
+        }
+    }
+    public void deleteActiveAlarm(String AlarmKey) {
+        activatedAlarms.remove(AlarmKey);
     }
 
 }

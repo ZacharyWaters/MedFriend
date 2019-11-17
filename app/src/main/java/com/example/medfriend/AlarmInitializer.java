@@ -13,13 +13,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 import static android.content.Context.ALARM_SERVICE;
 
 
 public class AlarmInitializer {
 
 
-    public static void setAlarmClosestTime(String alarmName, boolean[] daysOfWeek, ArrayList<ExampleTime> times, Context context){
+    public static void setAlarmClosestTime(String alarmName, boolean[] daysOfWeek, ArrayList<ExampleTime> times, Context context, String alarmKeyString){
 
         // This is the alarm manager object, this is what we call the alarms on
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
@@ -31,6 +32,7 @@ public class AlarmInitializer {
         Bundle bundle = new Bundle();
         bundle.putString("alarmName", alarmName);
         bundle.putBooleanArray("daysOfWeek",daysOfWeek);
+        bundle.putString("alarmKey", alarmKeyString);
         //bundle.putSerializable("times", times);
 
         // Turn TimesIntoString
@@ -93,7 +95,23 @@ public class AlarmInitializer {
 
             GregorianCalendar calendar = new GregorianCalendar(currentYear, currentMonth,currentDayOfMonth, upcomingTime.getRealHourValue(), upcomingTime.getRealMinuteValue());
 
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, in, 0);
+            Log.d("ZZZ", "Key Before Converting: " + alarmKeyString);
+            // We have to concatenate the Key Request Code because its too long for an int
+            String  lastSevenDigits = alarmKeyString.substring(alarmKeyString.length() - 7);
+            int alarmKeyAsRequestCode = Integer.valueOf(lastSevenDigits);
+            Log.d("ZZZ", "Key After Converting: " + String.valueOf(alarmKeyAsRequestCode));
+
+            // OLD PENDING INTENT
+            //PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, in, 0);
+
+            // NEW PENDING INTENT
+            // THIS SHOULD NOT CAUSE ALARMS TO OVERRIDE EACH OTHER
+            final PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                    context,
+                    alarmKeyAsRequestCode,
+                    in,
+                    0
+            );
 
             am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),  pendingIntent);
 
@@ -127,7 +145,23 @@ public class AlarmInitializer {
             long totalDifferenceTimeinMili = dayDifferenceinMili + firstTimeinMili + timeleftTodayinMili;
             long newFinalTimeinMili = currentTimeinMili + totalDifferenceTimeinMili;
 
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, in, 0);
+
+            Log.d("ZZZ", "Key Before Converting: " + alarmKeyString);
+            // We have to concatenate the Key Request Code because its too long for an int
+            String  lastSevenDigits = alarmKeyString.substring(alarmKeyString.length() - 7);
+            int alarmKeyAsRequestCode = Integer.valueOf(lastSevenDigits);
+            Log.d("ZZZ", "Key After Converting: " + String.valueOf(alarmKeyAsRequestCode));
+
+            // OLD PENDING INTENT
+            // PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, in, 0);
+
+            // NEW PENDING INTENT
+            final PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                    context,
+                    alarmKeyAsRequestCode,
+                    in,
+                    0
+            );
 
             am.setExact(AlarmManager.RTC_WAKEUP, newFinalTimeinMili,  pendingIntent);
 
