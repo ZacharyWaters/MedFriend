@@ -115,7 +115,6 @@ public class AlarmTrigger extends AppCompatActivity {
                             Log.d("ll", String.valueOf(careTakersID.size()));
                             for(int i = 0; i < careTakersID.size(); i++){
                                 String checkId = careTakersID.get(i);
-
                                 String maybePhoneNumber = dataSnapshot.child(checkId).child("PhoneNumber").getValue().toString();
                                 Log.d("lll", maybePhoneNumber);
                                 phoneNumbers.add("+16787612383");
