@@ -7,7 +7,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class AddPhoneNumber extends AppCompatActivity {
+
+    // This is the Firebase Database
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    DatabaseReference firebaseRootRef = firebaseDatabase.getReference();
 
     String number = "";
     @Override
@@ -23,8 +30,11 @@ public class AddPhoneNumber extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 number = phoneField.getText().toString();
+                number = "+1" + number;
                 //TODO: Zach does database calls here
-
+                String activeEmail = ((GlobalVariables) AddPhoneNumber.this.getApplication()).getCurrentUserEmail();
+                String activeUserId = ((GlobalVariables) AddPhoneNumber.this.getApplication()).getCurrentUserID();
+                firebaseRootRef.child("UsersID&Name").child(activeUserId).child("PhoneNumbers").child(number).setValue(number);
                 finish();
             }
         });
