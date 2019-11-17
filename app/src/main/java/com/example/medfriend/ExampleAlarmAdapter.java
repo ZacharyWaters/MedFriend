@@ -1,5 +1,6 @@
 package com.example.medfriend;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ExampleAlarmAdapter extends RecyclerView.Adapter<ExampleAlarmAdapter.ExampleViewHolder> {
 
     private ArrayList<ExampleAlarm> myExampleAlarmList;
+    Context myContext;
 
     public static class ExampleViewHolder extends RecyclerView.ViewHolder {
 
@@ -40,8 +42,9 @@ public class ExampleAlarmAdapter extends RecyclerView.Adapter<ExampleAlarmAdapte
         }
     }
 
-    public ExampleAlarmAdapter(ArrayList<ExampleAlarm> exampleList) {
+    public ExampleAlarmAdapter(ArrayList<ExampleAlarm> exampleList, Context classContext) {
         myExampleAlarmList = exampleList;
+        myContext = classContext;
     }
 
     @NonNull
@@ -55,7 +58,7 @@ public class ExampleAlarmAdapter extends RecyclerView.Adapter<ExampleAlarmAdapte
     @Override
     public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
         // Extract the element from the corresponding Array at the position index
-        ExampleAlarm currentAlarmItem = myExampleAlarmList.get(position);
+        final ExampleAlarm currentAlarmItem = myExampleAlarmList.get(position);
 
         // Get the backend values from the element that you plan on using
         String alarmItemName = currentAlarmItem.getAlarmName();
@@ -100,7 +103,21 @@ public class ExampleAlarmAdapter extends RecyclerView.Adapter<ExampleAlarmAdapte
         combinedTimes = combinedTimes + finalIndividualTime;
 
         holder.alarmTimes.setText(combinedTimes);
-        
+
+        holder.alarmDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // get the AlarmIndex by making a helper method in the LandingScreen class
+                int deleteIndex = ((LandingScreen) myContext).getIndexOfAlarm(currentAlarmItem);
+
+                // Disable the alarm
+
+                // Remove it from the active list
+
+                ((LandingScreen) myContext).removeItemAtIndex(deleteIndex);
+            }
+        });
 
     }
 

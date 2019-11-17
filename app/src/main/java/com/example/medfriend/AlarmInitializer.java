@@ -175,6 +175,14 @@ public class AlarmInitializer {
         // get the closest time on that day
     }
 
+    // Cancels the pending intent of an alarm
+    // Requires 4 things to by successful
+    // The exact Context used to create the pendingIntent,  getApplicationContext()
+    // The exact requestCode used to create the pendingIntent, alarmKey cut down to the last 7 digits
+    public static void cancelAlarm(String alarmName, boolean[] daysOfWeek, ArrayList<ExampleTime> times, Context context, String alarmKeyString){
+
+    }
+
     public static boolean canTheAlarmActivateToday(boolean[] daysOfWeek, int todayDayConverted){
         if(daysOfWeek[todayDayConverted] == true) {
             return true;

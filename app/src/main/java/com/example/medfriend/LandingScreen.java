@@ -80,7 +80,7 @@ public class LandingScreen extends AppCompatActivity {
         // Initializes the Recycler-View and all its stuff
         alarmRecyclerView = findViewById(R.id.alarmsRecycler);
         alarmRecyclerLayoutManager = new LinearLayoutManager(this);
-        alarmRecyclerViewAdapter = new ExampleAlarmAdapter(exampleAlarmItemsList);
+        alarmRecyclerViewAdapter = new ExampleAlarmAdapter(exampleAlarmItemsList, LandingScreen.this);
         alarmRecyclerView.setLayoutManager(alarmRecyclerLayoutManager);
         alarmRecyclerView.setAdapter(alarmRecyclerViewAdapter);
     }
@@ -92,6 +92,10 @@ public class LandingScreen extends AppCompatActivity {
     public void removeItemAtIndex(int position) {
         exampleAlarmItemsList.remove(position);
         alarmRecyclerViewAdapter.notifyItemRemoved(position);
+    }
+    public int getIndexOfAlarm(ExampleAlarm currentAlarmItem){
+        int i = exampleAlarmItemsList.indexOf(currentAlarmItem);
+        return i;
     }
 
     public void checkWarningTextVisible() {
