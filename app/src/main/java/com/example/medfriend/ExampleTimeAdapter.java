@@ -90,16 +90,6 @@ public class ExampleTimeAdapter extends RecyclerView.Adapter<ExampleTimeAdapter.
 
             }
         });
-
-//        //Here is where we are gonna set the buttons to work
-//        holder.editTimeButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(currentContext, TimeCreatorActivity.class);
-//                currentContext.startActivity(intent);
-//            }
-//        });
-//    }
     }
 
     @Override

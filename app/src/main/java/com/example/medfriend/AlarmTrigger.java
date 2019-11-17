@@ -117,17 +117,14 @@ public class AlarmTrigger extends AppCompatActivity {
                             for(int i = 0; i < careTakersID.size(); i++){
                                 String checkId = careTakersID.get(i);
                                 String maybePhoneNumber = dataSnapshot.child(checkId).child("PhoneNumber").getValue().toString();
-                                Log.d("lll", maybePhoneNumber);
-                                phoneNumbers.add(maybePhoneNumber);
-                                Log.d("after", ":((((((");
-                                Log.d("after2", String.valueOf(phoneNumbers.size()));
+                                if(maybePhoneNumber != null && !maybePhoneNumber.isEmpty()){
+                                    phoneNumbers.add(maybePhoneNumber);
+                                }
 
                             }
 
                             for (int i = 0; i < phoneNumbers.size(); i++) {
                                 SmsManager smsManager = SmsManager.getDefault();
-                                //Log.d("lllll", phoneNumbers.get(i));
-
                                 smsManager.sendTextMessage(phoneNumbers.get(i), null, "I forgot to take my medicine just now, please check on me", null, null);
                             }
 

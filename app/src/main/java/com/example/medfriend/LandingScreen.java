@@ -42,6 +42,8 @@ public class LandingScreen extends AppCompatActivity {
     View.OnClickListener addAlarmListener = new View.OnClickListener(){
         public void  onClick  (View  v){
             Intent intent = new Intent(LandingScreen.this, AlarmActivity.class);
+            // Give it default request code:
+            intent.putExtra("requestCode", 6);
             startActivityForResult(intent, 1);
         }
     };
@@ -97,6 +99,21 @@ public class LandingScreen extends AppCompatActivity {
         int i = exampleAlarmItemsList.indexOf(currentAlarmItem);
         return i;
     }
+    public int getIndexOfAlarmKey(String alarmKey){
+        int i = 0;
+        boolean brakes = false;
+        while(i < exampleAlarmItemsList.size() && brakes != true){
+            String compareKey = exampleAlarmItemsList.get(i).getAlarmDatabaseID();
+            if(compareKey.equals(alarmKey)){
+                brakes = true;
+            }
+        }
+        if(brakes == true){
+            return i;
+        } else{
+            return -1;
+        }
+    }
 
     public void deleteAlarmFromDatabase(String alarmKey){
         String activeID = ((GlobalVariables) LandingScreen.this.getApplication()).getCurrentUserID();
@@ -123,7 +140,19 @@ public class LandingScreen extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         // A result Code of 5 means the user selected "Accept" for the alarm creator Class
-        if (resultCode == 5) {
+        //A result Code of 5 means the user selected "Accept" for the alarm creator Class
+        if ((resultCode == 5) || (resultCode == 8)){
+
+            if(resultCode == 8){
+                // extract old key
+                String oldAlarmKey = data.getStringExtra("OldAlarmKey");
+                // get index of old key
+                int deleteIndex = getIndexOfAlarmKey(oldAlarmKey);
+                // delete old key
+                removeItemAtIndex(deleteIndex);
+                // deletes old alarm from database
+                deleteAlarmFromDatabase(oldAlarmKey);
+            }
 
             //Extracts the Values provided by the user
             String extractedName = data.getStringExtra("Name");
@@ -162,10 +191,7 @@ public class LandingScreen extends AppCompatActivity {
             // adds the new alarm recycler to the array
             insertItem(0,providedAlarm);
 
-
-
             ///*** now we need to add this alarm to the "ActiveAlarmsList"
-            ///*** you can do this by simply adding the key to the globalArrayList
             ((GlobalVariables) LandingScreen.this.getApplication()).addActiveAlarm(timeDatabaseKey);
 
             // Updates the Warning Text
@@ -292,39 +318,6 @@ public class LandingScreen extends AppCompatActivity {
                                 // FIRE ALARM
                                 AlarmInitializer.setAlarmClosestTime(extractedAlarmName, extractWeekdayArray, initializedExampleTimesList, getApplicationContext(), extractedAlarmKey);
                             }
-                                    // ADD TO LIST
-
-                                    // FIRE ALARM
-
-                            ///*** Activate the alarm by calling:
-                            ///*** AlarmInitializer.setAlarmClosestTime(extractedName, extractedDaysofWeek, YYYY, getApplicationContext());
-                            ///*** YYY is an arraylist of <ExampleTime> objects that correspond to that alarm
-                            ///*** in order to create YYY for each alarm you will have to use the for loop above at line 250
-                            ///*** you need to get the three things in order to make a ExampleTime:
-                            ///*** the String TimeMessage,int HourOfDay, and int Minutes
-                            ///*** By calling:
-                            ///*** String extractedSingleTime = timesIterator.getValue().toString();
-                            ///*** in the loop above you will get back a string that follows the format  realHourText+"@"+minuteText;
-                            ///*** use the .Split function on the @ character to break it into an array of size 2
-                            ///*** the first index will be the hour of day, and the second will be the minutes
-                            ///*** the TimeMessage String is the: extractedSingleTime value already gotten at line 253
-                            ///*** so make a new Example time for each time as you loop through, add them to the example time array
-                            ///*** after the loop ends you will have you YYY object.
-                            ///*** Now call and activate the alarm, then store the alarms value in a ArrayList that
-                            ///*** I will refer to as the "ActiveAlarmsList",
-                            ///*** In the GlobalVariables class make a global arrayList that holds strings, thats "ActiveAlarmsList",
-                            ///*** Fill that arrayList with the "key"-timeDatabaseKey of each alarm as we activate it
-                            ///*** Now we need to make sure we don't keep activating the same alarms over and over again
-                            ///*** make it so that in order for it to be activated it must not be on the "ActiveAlarmsList"
-                            ///*** you can accomplish this by simply looping through and checking if there are any duplicate keys to the alarm
-                            ///*** you are currently trying to activate
-
-
-                             // Sets the alarms
-                             // will need to keep an active list of the ones that are set to prevent "resetting them"
-                            // so i propose a global list of alarmKey's that you simply search though
-                            // you will have to update such a list in two locations, at the homepage after the leave the edit/create/delete screen
-                            // or when you start up the app
 
                              // Creates a new alarm recycler item
                             ExampleAlarm providedAlarm = new ExampleAlarm(extractedAlarmName, extractWeekdayArray, extractedTimes2, extractedAlarmKey);

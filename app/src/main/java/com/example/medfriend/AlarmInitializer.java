@@ -201,6 +201,25 @@ public class AlarmInitializer {
 
     }
 
+    // Cancels the pending intent of an alarm but instead just uses the key
+    public static void cancelAlarmWithKey(String alarmKeytoDelete, Context applicationContext){
+        Intent in = new Intent(applicationContext, zAlarmReciever.class);
+
+        String alarmID_Uncut = alarmKeytoDelete;
+        String  lastSevenDigits = alarmID_Uncut.substring(alarmID_Uncut.length() - 7);
+        int alarmKeyAsRequestCode = Integer.valueOf(lastSevenDigits);
+
+        final PendingIntent pIntent = PendingIntent.getBroadcast(
+                applicationContext,
+                alarmKeyAsRequestCode,
+                in,
+                0
+        );
+
+        final AlarmManager manager = (AlarmManager) applicationContext.getSystemService(Context.ALARM_SERVICE);
+        manager.cancel(pIntent);
+    }
+
     public static boolean canTheAlarmActivateToday(boolean[] daysOfWeek, int todayDayConverted){
         if(daysOfWeek[todayDayConverted] == true) {
             return true;

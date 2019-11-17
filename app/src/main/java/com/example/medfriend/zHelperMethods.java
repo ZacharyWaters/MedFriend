@@ -1,5 +1,7 @@
 package com.example.medfriend;
 
+import java.util.ArrayList;
+
 public class zHelperMethods {
 
     public static String turnWeekdayBoolsintoDatabaseString(boolean[] weekdays){
@@ -12,6 +14,22 @@ public class zHelperMethods {
             }
         }
         return boolsDatabaseString;
+    }
+
+    public static ArrayList<ExampleTime> turnStringListTimesIntoExampleTimesList(ArrayList<String> unconvertedTimes){
+        ArrayList<ExampleTime> timesReturn = new ArrayList<>();
+        for(int i = 0; i < unconvertedTimes.size(); i++){
+            String toConvert = unconvertedTimes.get(i);
+            String connectedTuple = turnNaturalTimeintoConcatenatedDatabaseText(toConvert);
+            String[] brokenTuple = connectedTuple.split("@");
+            String realHourText = brokenTuple[0];
+            String realMinuteText = brokenTuple[1];
+            int realHourofDayInt = Integer.valueOf(realHourText);
+            int realMinutesInt = Integer.valueOf(realMinuteText);
+            ExampleTime recreatedExampleTime = new ExampleTime(toConvert,realHourofDayInt,realMinutesInt);
+            timesReturn.add(recreatedExampleTime);
+        }
+        return timesReturn;
     }
 
     public static String turnNaturalTimeintoConcatenatedDatabaseText(String alarmText){

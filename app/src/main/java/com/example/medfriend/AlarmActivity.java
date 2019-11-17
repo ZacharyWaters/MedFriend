@@ -67,6 +67,13 @@ public class AlarmActivity extends AppCompatActivity {
     // ArrayList for the recycler Time Items
     ArrayList <ExampleTime> exampleTimeArraylist;
 
+    // Request code
+    // 6 == default
+    // 7 == Edit
+    int requestCode;
+
+    String oldAlarmKey;
+
     // This method initialises the time Array
     public void createTimeExampleList(){
 
@@ -328,52 +335,71 @@ public class AlarmActivity extends AppCompatActivity {
 
                 intentToReturnByAccept.putExtra("Times", extractedTimes);
 
-                // Gets the current Time to use as as the key for the new ExampleAlarm
-                Calendar calendar = Calendar.getInstance();
-
-                // Returns current time in millis
-                long timeMilli = calendar.getTimeInMillis();
-
-                // Converts that millisecond value into a String for the key
-                String alarmKeyString = Long.toString(timeMilli);
-
-                // Adds the alarmKeyString to the Intent to be passed to te Landing Screen Class
-                intentToReturnByAccept.putExtra("alarmKey", alarmKeyString);
-
-                // Creating the actual alarm #################################################################
-
-                AlarmInitializer.setAlarmClosestTime(extractedName, weekDatesArray, exampleTimeArraylist, getApplicationContext(), alarmKeyString);
 
 
-//                // This will have to be massively reworked and entirely retooled
-//                AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-//                //AlarmManager am = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-//                Calendar c = Calendar.getInstance();
-//                int year = c.get(Calendar.YEAR);
-//                int month = c.get(Calendar.MONTH);
-//                int day = c.get(Calendar.DAY_OF_MONTH);
-//
-//                ExampleTime singleTime = exampleTimeArraylist.get(0);
-//                int hour = singleTime.getRealHourValue();
-//                int minute = singleTime.getRealMinuteValue();
-//
-//                GregorianCalendar calendar = new GregorianCalendar(year, month, day, hour, minute);
-//
-//                //long time = calendar.getTimeInMillis();
-//                Intent in = new Intent(getApplicationContext(), zAlarmReciever.class);
-//                in.putExtra("alarmName", extractedName);
-//
-//                PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, in, 0);
-//                //86400000
-//                //am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-//                am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),  pendingIntent);
-//                Log.d("ZZZ",String.valueOf(calendar.getTimeInMillis()));
-                // END OF ACTUALLY CREATING ALARM #################################################################
+                if(requestCode == 6){
+                    // Creating the actual alarm #################################################################
 
-                // Sets the proper result code so the homepage knows what to do
-                setResult(5, intentToReturnByAccept);
+                    // Gets the current Time to use as as the key for the new ExampleAlarm
+                    Calendar calendar = Calendar.getInstance();
 
-                finish();
+                    // Returns current time in millis
+                    long timeMilli = calendar.getTimeInMillis();
+
+                    // Converts that millisecond value into a String for the key
+                    String alarmKeyString = Long.toString(timeMilli);
+
+                    // Adds the alarmKeyString to the Intent to be passed to te Landing Screen Class
+                    intentToReturnByAccept.putExtra("alarmKey", alarmKeyString);
+
+                    AlarmInitializer.setAlarmClosestTime(extractedName, weekDatesArray, exampleTimeArraylist, getApplicationContext(), alarmKeyString);
+
+                    // END OF ACTUALLY CREATING ALARM #################################################################
+
+                    // Sets the proper result code so the homepage knows what to do
+                    setResult(5, intentToReturnByAccept);
+
+                    finish();
+
+
+                } else if (requestCode == 7){
+
+                    Context applicationContext = getApplicationContext();
+
+                    // Disable the alarm
+                    AlarmInitializer.cancelAlarmWithKey(oldAlarmKey,applicationContext);
+
+                    // Remove it from the active list
+                    ((GlobalVariables)applicationContext).deleteActiveAlarm(oldAlarmKey);
+
+                    // Pass oldKey back so it can be removed from the recycler list
+                    intentToReturnByAccept.putExtra("OldAlarmKey", oldAlarmKey);
+
+                    // Creating the actual alarm #################################################################
+
+                    // Gets the current Time to use as as the key for the new ExampleAlarm
+                    Calendar calendar = Calendar.getInstance();
+
+                    // Returns current time in millis
+                    long timeMilli = calendar.getTimeInMillis();
+
+                    // Converts that millisecond value into a String for the key
+                    String alarmKeyString = Long.toString(timeMilli);
+
+                    // Adds the alarmKeyString to the Intent to be passed to te Landing Screen Class
+                    intentToReturnByAccept.putExtra("alarmKey", alarmKeyString);
+
+                    AlarmInitializer.setAlarmClosestTime(extractedName, weekDatesArray, exampleTimeArraylist, getApplicationContext(), alarmKeyString);
+
+                    // END OF ACTUALLY CREATING ALARM #################################################################
+
+                    // Sets the proper result code so the homepage knows what to do
+                    setResult(8, intentToReturnByAccept);
+
+                    finish();
+
+
+                }
 
             }
         }
@@ -566,6 +592,30 @@ public class AlarmActivity extends AppCompatActivity {
         }
     }
 
+    public void setDaysofWeekButtons(boolean[] preset){
+        if(preset[0] == true){
+            monday_Button.performClick();
+        }
+        if(preset[1] == true){
+            tuesday_Button.performClick();
+        }
+        if(preset[2] == true){
+            wednesday_Button.performClick();
+        }
+        if(preset[3] == true){
+            thursday_Button.performClick();
+        }
+        if(preset[4] == true){
+            friday_Button.performClick();
+        }
+        if(preset[5] == true){
+            saturday_Button.performClick();
+        }
+        if(preset[6] == true){
+            sunday_Button.performClick();
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -621,54 +671,87 @@ public class AlarmActivity extends AppCompatActivity {
         // Initial Check of the warning Text
         checkWarningTextVisible();
 
-        Calendar calendar = Calendar.getInstance();
-        int current_Day = calendar.get(Calendar.DAY_OF_WEEK);
 
-        // Automatically toggles the current day of the week radiobutton
-        switch (current_Day) {
-            case Calendar.MONDAY:
-                // Current day is Monday
-                monday_Button.setChecked(true);
-                monday_Toggle = true;
-                toggleCount = 1;
-                break;
-            case Calendar.TUESDAY:
-                // Current day is Tuesday
-                tuesday_Button.setChecked(true);
-                tuesday_Toggle = true;
-                toggleCount = 1;
-                break;
-            case Calendar.WEDNESDAY:
-                // Current day is Wednesday
-                wednesday_Button.setChecked(true);
-                wednesday_Toggle = true;
-                toggleCount = 1;
-                break;
-            case Calendar.THURSDAY:
-                // Current day is Thursday
-                thursday_Button.setChecked(true);
-                thursday_Toggle = true;
-                toggleCount = 1;
-                break;
-            case Calendar.FRIDAY:
-                // Current day is Friday
-                friday_Button.setChecked(true);
-                friday_Toggle = true;
-                toggleCount = 1;
-                break;
-            case Calendar.SATURDAY:
-                // Current day is Saturday
-                saturday_Button.setChecked(true);
-                saturday_Toggle = true;
-                toggleCount = 1;
-                break;
-            case Calendar.SUNDAY:
-                // Current day is Sunday
-                sunday_Button.setChecked(true);
-                sunday_Toggle = true;
-                toggleCount = 1;
-                break;
+        // DEFAULT STUFF VS EDIT STUFF
+        // ON EDIT STUFF:
+        Intent creatorIntent = getIntent();
+        requestCode = creatorIntent.getIntExtra("requestCode", 6);
+
+        if(requestCode == 6){
+            Calendar calendar = Calendar.getInstance();
+            int current_Day = calendar.get(Calendar.DAY_OF_WEEK);
+
+            // Automatically toggles the current day of the week radiobutton
+            switch (current_Day) {
+                case Calendar.MONDAY:
+                    // Current day is Monday
+                    monday_Button.setChecked(true);
+                    monday_Toggle = true;
+                    toggleCount = 1;
+                    break;
+                case Calendar.TUESDAY:
+                    // Current day is Tuesday
+                    tuesday_Button.setChecked(true);
+                    tuesday_Toggle = true;
+                    toggleCount = 1;
+                    break;
+                case Calendar.WEDNESDAY:
+                    // Current day is Wednesday
+                    wednesday_Button.setChecked(true);
+                    wednesday_Toggle = true;
+                    toggleCount = 1;
+                    break;
+                case Calendar.THURSDAY:
+                    // Current day is Thursday
+                    thursday_Button.setChecked(true);
+                    thursday_Toggle = true;
+                    toggleCount = 1;
+                    break;
+                case Calendar.FRIDAY:
+                    // Current day is Friday
+                    friday_Button.setChecked(true);
+                    friday_Toggle = true;
+                    toggleCount = 1;
+                    break;
+                case Calendar.SATURDAY:
+                    // Current day is Saturday
+                    saturday_Button.setChecked(true);
+                    saturday_Toggle = true;
+                    toggleCount = 1;
+                    break;
+                case Calendar.SUNDAY:
+                    // Current day is Sunday
+                    sunday_Button.setChecked(true);
+                    sunday_Toggle = true;
+                    toggleCount = 1;
+                    break;
+            }
+        // EDIT STUFF
+        } else if(requestCode == 7){
+
+            // Extract Variables from Intent:
+            String pregen_alarmName = creatorIntent.getStringExtra("AlarmName");
+            boolean[] pregen_DaysofWeek = creatorIntent.getBooleanArrayExtra("DaysOfWeek");
+            String pregen_AlarmID = creatorIntent.getStringExtra("AlarmID");
+            ArrayList<String> pregen_TimesArray = creatorIntent.getStringArrayListExtra("TimeArray");
+
+            // Helper method that turns arraylist of strings into array list of example times
+            // method that adds time in order to array
+            // Helper method that activates the buttons based on the pregen_DaysofWeek
+
+            // Save one of them into a class variable to be used when the button is pressed
+            // set the pre-set variables up
+            alarmNameInput.setText(pregen_alarmName);
+            setDaysofWeekButtons(pregen_DaysofWeek);
+            oldAlarmKey = pregen_AlarmID;
+            ArrayList<ExampleTime> pregenTimesConvertedArray = zHelperMethods.turnStringListTimesIntoExampleTimesList(pregen_TimesArray);
+            for(int i = 0; i < pregenTimesConvertedArray.size(); i++){
+                ExampleTime pregenTime = pregenTimesConvertedArray.get(i);
+                insertItem(i,pregenTime);
+            }
+
         }
+
 
         // Automatically sets the timePicker to the current Time
 

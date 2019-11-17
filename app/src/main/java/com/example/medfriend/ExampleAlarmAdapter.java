@@ -1,6 +1,7 @@
 package com.example.medfriend;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -124,6 +125,29 @@ public class ExampleAlarmAdapter extends RecyclerView.Adapter<ExampleAlarmAdapte
 
                 // Remove it from the database
                 ((LandingScreen) myContext).deleteAlarmFromDatabase(currentAlarmItem.getAlarmDatabaseID());
+
+                // Update the warning Text
+                ((LandingScreen) myContext). checkWarningTextVisible();
+            }
+        });
+
+        holder.alarmEditButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // Make intent to go to time activity
+                Intent intentToEdit = new Intent(((LandingScreen) myContext), AlarmActivity.class);
+
+                // Add information to "pre-generate" the activity so it represents the object
+                // This would be the Alarm Name, Times, Weekdays
+                intentToEdit.putExtra("AlarmName", currentAlarmItem.getAlarmName());
+                intentToEdit.putExtra("DaysOfWeek", currentAlarmItem.getAllDaysofWeek());
+                intentToEdit.putExtra("AlarmID", currentAlarmItem.getAlarmDatabaseID());
+                intentToEdit.putExtra("TimeArray", currentAlarmItem.getSetTimes());
+                intentToEdit.putExtra("requestCode", 7);
+
+                // ADD a code to the intent so that the class knows to use pre-gen information
+                ((LandingScreen) myContext).startActivityForResult(intentToEdit, 1);
             }
         });
 
