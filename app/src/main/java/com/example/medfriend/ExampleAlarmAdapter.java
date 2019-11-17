@@ -86,7 +86,6 @@ public class ExampleAlarmAdapter extends RecyclerView.Adapter<ExampleAlarmAdapte
 
 
 
-
         String combinedTimes = "";
         // Need to iterate through all the times, conjoin them like so: X1, X2, X3,...,Xn
         for(int i = 0; i < alarmItemSetTimes.size() - 1; i++){
@@ -101,6 +100,7 @@ public class ExampleAlarmAdapter extends RecyclerView.Adapter<ExampleAlarmAdapte
         combinedTimes = combinedTimes + finalIndividualTime;
 
         holder.alarmTimes.setText(combinedTimes);
+        
 
     }
 

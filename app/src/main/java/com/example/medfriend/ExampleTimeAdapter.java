@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ExampleTimeAdapter extends RecyclerView.Adapter<ExampleTimeAdapter.ExampleViewHolder> {
 
     private ArrayList<ExampleTime> mExampleTimeList;
+    Context myContext;
 
 
     public static class ExampleViewHolder extends RecyclerView.ViewHolder {
@@ -29,12 +30,14 @@ public class ExampleTimeAdapter extends RecyclerView.Adapter<ExampleTimeAdapter.
             super(itemView);
             timeDisplayMessage = itemView.findViewById(R.id.timeMessage);
             deleteTimeButton = itemView.findViewById(R.id.delete);
+
             editTimeButton = itemView.findViewById(R.id.edit);
         }
     }
 
-    public ExampleTimeAdapter(ArrayList<ExampleTime> exampleList) {
+    public ExampleTimeAdapter(ArrayList<ExampleTime> exampleList, Context classContext) {
         mExampleTimeList = exampleList;
+        myContext = classContext;
     }
 
     @NonNull
@@ -50,7 +53,7 @@ public class ExampleTimeAdapter extends RecyclerView.Adapter<ExampleTimeAdapter.
     public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
 
         // Extract the element from the corresponding Array at the position index
-        ExampleTime currentTimeitem = mExampleTimeList.get(position);
+        final ExampleTime currentTimeitem = mExampleTimeList.get(position);
 
         // Get the backend values from the element that you plan on using
         String storedTimeMessage = currentTimeitem.getExampleTimeMessage();
@@ -58,16 +61,35 @@ public class ExampleTimeAdapter extends RecyclerView.Adapter<ExampleTimeAdapter.
         // Set the front end XML value based of the back end's element's value
         holder.timeDisplayMessage.setText(storedTimeMessage);
 
-//        holder.deleteTimeButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ((Homepage)getActivity()).deleteAlarm(alarm, alarm.toString());
-//
-//                onDetach();
-//
-//
-//            }
-//        });
+
+
+        holder.deleteTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int DeleteIndex = ((AlarmActivity) myContext).getIndexofTime(currentTimeitem);
+                ((AlarmActivity) myContext).removeItemAtIndex(DeleteIndex);
+            }
+        });
+
+        holder.editTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // Make intent to go to time activity
+                Intent intentToEdit = new Intent(((AlarmActivity) myContext), TimeCreatorActivity.class);
+
+                // Add information to "pre-generate" the activity so it represents the object
+                // This would be the time of the object you want to edit
+                intentToEdit.putExtra("RealHour", currentTimeitem.getRealHourValue());
+                intentToEdit.putExtra("RealMinute", currentTimeitem.getRealMinuteValue());
+                intentToEdit.putExtra("Message", currentTimeitem.getExampleTimeMessage());
+                intentToEdit.putExtra("requestCode", 2);
+
+                // ADD a code to the intent so that the class knows to use pre-gen information
+                ((AlarmActivity) myContext).startActivityForResult(intentToEdit, 1);
+
+            }
+        });
 
 //        //Here is where we are gonna set the buttons to work
 //        holder.editTimeButton.setOnClickListener(new View.OnClickListener() {

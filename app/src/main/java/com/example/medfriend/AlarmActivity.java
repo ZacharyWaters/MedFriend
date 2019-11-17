@@ -78,7 +78,7 @@ public class AlarmActivity extends AppCompatActivity {
         // Initializes the Recycler-View and all its stuff
         timeRecyclerView = findViewById(R.id.timeRecycler);
         timeRecyclerLayoutManager = new LinearLayoutManager(this);
-        timeRecyclerViewAdapter = new ExampleTimeAdapter(exampleTimeArraylist);
+        timeRecyclerViewAdapter = new ExampleTimeAdapter(exampleTimeArraylist, AlarmActivity.this);
         timeRecyclerView.setLayoutManager(timeRecyclerLayoutManager);
         timeRecyclerView.setAdapter(timeRecyclerViewAdapter);
     }
@@ -90,6 +90,26 @@ public class AlarmActivity extends AppCompatActivity {
     public void removeItemAtIndex(int position) {
         exampleTimeArraylist.remove(position);
         timeRecyclerViewAdapter.notifyItemRemoved(position);
+    }
+    public int getIndexofTime(ExampleTime lookingTime) {
+        int i = exampleTimeArraylist.indexOf(lookingTime);
+        return i;
+    }
+
+    public int getIndexofTimeMessage(String oldMessage){
+        int i = 0;
+        boolean brakes = false;
+        while(i < exampleTimeArraylist.size() && brakes != true){
+            String existingMessage = exampleTimeArraylist.get(i).getExampleTimeMessage();
+            if(oldMessage.equals(existingMessage)){
+                brakes = true;
+            }
+        }
+        if(brakes == true){
+            return i;
+        } else {
+            return -1;
+        }
     }
 
     public void checkWarningTextVisible() {
@@ -236,6 +256,7 @@ public class AlarmActivity extends AppCompatActivity {
     View.OnClickListener addTimeListener = new View.OnClickListener(){
         public void  onClick  (View  v){
             Intent intent = new Intent(AlarmActivity.this, TimeCreatorActivity.class);
+            intent.putExtra("requestCode", 1);
             startActivityForResult(intent, 1);
         }
     };
@@ -462,6 +483,86 @@ public class AlarmActivity extends AppCompatActivity {
             checkWarningTextVisible();
 
             // Reloads the Recycler View
+        // THIS MEANS THE USER CLICKED ACCEPT AFTER EDITING THEIR TIME
+        } else if(resultCode == 4){
+            // get the string oldMessage value
+            String extracted_Old_Text = data.getStringExtra("OldText");
+
+            // find the index of the time that corresponds to oldMessage
+            int indexToDelete = getIndexofTimeMessage(extracted_Old_Text);
+
+            // delete that index
+            removeItemAtIndex(indexToDelete);
+
+            //Extracts the hour and minute provided by the user
+            int extracted_Hour = data.getIntExtra("Hour", 0);
+            int extracted_Minute = data.getIntExtra("Minute", 0);
+
+            // Converts the given hour and minute into AM or PM time
+            String naturalLabel = militaryToNatural(extracted_Hour, extracted_Minute);
+
+
+            // Makes a new time object for the RecyclerView
+            ExampleTime userCreatedTime = new ExampleTime(naturalLabel,extracted_Hour,extracted_Minute);
+
+
+            // check if the array is empty, else
+            int timeArrayLength = exampleTimeArraylist.size();
+
+            if(timeArrayLength == 0){
+                insertItem(0,userCreatedTime);
+            } else {
+                int i = 0;
+                boolean brakes = false;
+                boolean isDuplicate = false;
+                while(i < timeArrayLength && brakes != true) {
+
+                    // gets the time at the index i
+                    ExampleTime iterativeTime = exampleTimeArraylist.get(i);
+
+                    // gets the hour and minute of the iterative time
+                    int realIterativeHour = iterativeTime.getRealHourValue();
+                    int realiterativeMinute = iterativeTime.getRealMinuteValue();
+
+                    // compares starting with hour, then minute, then checking if duplicate
+                    if(extracted_Hour < realIterativeHour){
+
+                        // Sets the brakes to true
+                        brakes = true;
+
+                        // this counteracts the increment below
+                        i = i - 1;
+
+                        // This account for minutes
+                    } else if((extracted_Hour == realIterativeHour) && (extracted_Minute < realiterativeMinute)){
+
+                        // Sets the brakes to true
+                        brakes = true;
+
+                        // this counteracts the increment below
+                        i = i - 1;
+                    } else if((extracted_Hour == realIterativeHour) && (extracted_Minute == realiterativeMinute)){
+                        isDuplicate = true;
+                    }
+
+                    // increments i
+                    i = i + 1;
+                }
+                // Inserts it into the array at the exact position required to be ordered chronologically
+                if(isDuplicate == false){
+
+                    insertItem(i,userCreatedTime);
+                }
+                // added alarm was a duplicate, so we make a toast
+                else {
+
+                    Toast.makeText(AlarmActivity.this, "Time Already Added", Toast.LENGTH_LONG).show();
+
+                }
+            }
+
+            //Update the warning Text
+            checkWarningTextVisible();
         }
     }
 
