@@ -114,7 +114,7 @@ public class AlarmTrigger extends AppCompatActivity {
 
                             for(int i = 0; i < careTakersID.size(); i++){
                                 String checkId = careTakersID.get(i);
-                                String maybePhoneNumber = dataSnapshot.child(checkId).child("phoneNumbers").getValue().toString();
+                                String maybePhoneNumber = dataSnapshot.child(checkId).child("PhoneNumbers").getValue().toString();
                                 if (maybePhoneNumber != null && !maybePhoneNumber.isEmpty()) {
                                     phoneNumbers.add(maybePhoneNumber);
                                 }
@@ -128,13 +128,9 @@ public class AlarmTrigger extends AppCompatActivity {
                         public void onCancelled(DatabaseError databaseError){}
                     });
 
-<<<<<<< HEAD
             for (String item: phoneNumbers) {
-=======
-            for (String item : phoneNumbers) {
->>>>>>> 385acb7ffd85ab6332ecadbccc00e2ceb1bc79f2
                 SmsManager smsManager = SmsManager.getDefault();
-                smsManager.sendTextMessage("+16787612383", null, "I forgot to take my medicine just now, please check on me", null, null);
+                smsManager.sendTextMessage("item", null, "I forgot to take my medicine just now, please check on me", null, null);
             }
 
 
