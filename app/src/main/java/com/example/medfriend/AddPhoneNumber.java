@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -30,11 +31,19 @@ public class AddPhoneNumber extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 number = phoneField.getText().toString();
-                number = "+1" + number;
-                //TODO: Zach does database calls here
-                String activeUserId = ((GlobalVariables) AddPhoneNumber.this.getApplication()).getCurrentUserID();
-                firebaseRootRef.child("UsersID&Name").child(activeUserId).child("PhoneNumber").setValue(number);
-                finish();
+                if(number.length() == 10){
+                    number = "+1" + number;
+                    //TODO: Zach does database calls here
+                    String activeUserId = ((GlobalVariables) AddPhoneNumber.this.getApplication()).getCurrentUserID();
+                    firebaseRootRef.child("UsersID&Name").child(activeUserId).child("PhoneNumber").setValue(number);
+                    finish();
+                }
+                else{
+                    Toast.makeText(AddPhoneNumber.this,
+                            "Not a valid Phone Number",
+                            Toast.LENGTH_LONG).show();
+
+                }
             }
         });
 
