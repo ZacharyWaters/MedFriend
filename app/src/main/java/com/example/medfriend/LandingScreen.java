@@ -99,7 +99,8 @@ public class LandingScreen extends AppCompatActivity {
     }
 
     public void deleteAlarmFromDatabase(String alarmKey){
-
+        String activeID = ((GlobalVariables) LandingScreen.this.getApplication()).getCurrentUserID();
+        firebaseRootRef.child("UsersID&Name").child(activeID).child("Alarms").child(alarmKey).removeValue();
     }
 
     public void checkWarningTextVisible() {
