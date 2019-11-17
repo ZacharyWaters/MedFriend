@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="32dp"
-                android:text="Enter your caretaker's email address"
+                android:text="Enter your desired caretaker's email address"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@+id/editEmail"
@@ -39,28 +39,6 @@
                 android:layout_gravity="center_horizontal"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:textColor="#000000"
-                app:layout_constraintBottom_toTopOf="@+id/requestButton"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textEmail" />
-
-            <TextView
-                android:id="@+id/textNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Enter your caretaker's phone number"
-                android:textColor="#000000"
-                android:textSize="20sp" />
-
-            <EditText
-                android:id="@+id/editNumber"
-                android:layout_width="329dp"
-                android:layout_height="match_parent"
-                android:background="#FFFFFF"
-                android:layout_gravity="center_horizontal"
-                android:ems="10"
-                android:inputType="phone"
                 android:textColor="#000000"
                 app:layout_constraintBottom_toTopOf="@+id/requestButton"
                 app:layout_constraintStart_toStartOf="parent"
@@ -88,6 +66,40 @@
                 app:layout_constraintEnd_toStartOf="@+id/requestButton"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editEmail" />
+
+            <TextView
+                android:id="@+id/textNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Enter your existing caretaker's phone number"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/editNumber"
+                android:layout_width="329dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:background="#FFFFFF"
+                android:ems="10"
+                android:inputType="phone"
+                android:textColor="#000000"
+                app:layout_constraintBottom_toTopOf="@+id/requestButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textEmail" />
+
+            <Button
+                android:id="@+id/addPhoneNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Request"
+                android:textSize="25sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cancelButton"
                 app:layout_constraintTop_toBottomOf="@+id/editEmail" />
 
         </LinearLayout>
