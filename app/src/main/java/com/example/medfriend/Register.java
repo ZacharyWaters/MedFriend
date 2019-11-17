@@ -144,7 +144,10 @@ public class Register extends AppCompatActivity {
                                                 myRef.child(UserId).child("CareTakerUserCount").setValue("0");
 
                                                 // This is the child list of care-taking users
-                                                myRef.child(UserId).child("CareTakerUsers").setValue("");
+                                                myRef.child(UserId).child("MyPatients").setValue("");
+
+                                                // This is the child list of care-taking users
+                                                myRef.child(UserId).child("MyCareTakers").setValue("");
 
                                                 // Empties out the text-fields
                                                 nameInput.setText("");

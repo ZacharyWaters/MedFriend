@@ -109,7 +109,7 @@ public class AddCaretaker extends AppCompatActivity {
                                         int careTakerCount = Integer.parseInt(snapshot.child("CareTakerUserCount").getValue().toString());
                                         boolean duplicate2 = false;
                                         if(careTakerCount > 0){
-                                            for (DataSnapshot iterator2 : snapshot.child("CareTakerUsers").getChildren()){
+                                            for (DataSnapshot iterator2 : snapshot.child("MyPatients").getChildren()){
                                                 //String savedEmails = iterator.toString();
                                                 String savedEmails = iterator2.getValue().toString();
                                                 //Log.d("MYLOG", savedEmails);
