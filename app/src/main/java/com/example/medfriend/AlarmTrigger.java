@@ -14,6 +14,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -109,6 +110,7 @@ public class AlarmTrigger extends AppCompatActivity {
                                 String idToAdd = caretaker.getValue().toString();
                                 careTakersID.add(idToAdd);
                             }
+
                             for(int i = 0; i < careTakersID.size(); i++){
                                 String checkId = careTakersID.get(i);
                                 String maybePhoneNumber = dataSnapshot.child(checkId).child("phoneNumber").getValue().toString();
@@ -125,8 +127,12 @@ public class AlarmTrigger extends AppCompatActivity {
                         public void onCancelled(DatabaseError databaseError){}
                     });
 
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage("+16785446219", null, "sms message", null, null);
+            Log.d("error", phoneNumbers.get(0));
+            for (String item : phoneNumbers) {
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(item, null, "I lost my medicine just now", null, null);
+
+            }
 
 
             Intent intent = new Intent(AlarmTrigger.this, LandingScreen.class);
