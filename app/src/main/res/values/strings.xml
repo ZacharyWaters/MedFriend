@@ -6,4 +6,5 @@
         <item>Twice a day</item>
         <item>Three times a day</item>
     </string-array>
+    <string name="title_activity_settings">Settings</string>
 </resources>

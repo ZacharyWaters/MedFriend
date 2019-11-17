@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TimeCreatorActivity"></activity>
+        <activity android:name=".AddPhoneNumber"></activity>
+        <activity android:name=".Settings" />
+        <activity android:name=".TimeCreatorActivity" />
         <activity android:name=".AlarmTrigger" />
         <activity android:name=".AlarmActivity" />
         <activity android:name=".LandingScreen" />
@@ -40,6 +42,5 @@
             android:name=".AlarmReceiver"
             android:process=":remote" />
     </application>
-
 
 </manifest>

@@ -25,7 +25,7 @@ public class AddCaretaker extends AppCompatActivity {
     Button cancelButton;
     View.OnClickListener cancelListener = new View.OnClickListener(){
         public void  onClick  (View  v){
-            startActivity(new Intent(AddCaretaker.this, LandingScreen.class));
+            startActivity(new Intent(AddCaretaker.this, Settings.class));
         }
     };
     Button requestButton;
@@ -54,7 +54,7 @@ public class AddCaretaker extends AppCompatActivity {
         // This is the EmailInput
         emailInput = (TextView)findViewById(R.id.editEmail);
 
-        numberInput = (TextView) findViewById(R.id.editNumber);
+        //numberInput = (TextView) findViewById(R.id.editNumber);
 
         // This is the Request Button
         requestButton.setOnClickListener(new View.OnClickListener() {

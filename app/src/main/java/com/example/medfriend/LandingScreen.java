@@ -49,7 +49,7 @@ public class LandingScreen extends AppCompatActivity {
     // Listener for the add Caretaker Button
     View.OnClickListener addCaretakerListener = new View.OnClickListener(){
         public void  onClick  (View  v){
-            Intent intent = new Intent(LandingScreen.this, AddCaretaker.class);
+            Intent intent = new Intent(LandingScreen.this, Settings.class);
             startActivity(intent);
         }
     };
