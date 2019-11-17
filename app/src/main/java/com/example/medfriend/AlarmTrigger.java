@@ -1,12 +1,17 @@
 package com.example.medfriend;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class AlarmTrigger extends AppCompatActivity {
+
+    final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
 
     // Static Text View
     TextView staticTriggerText;
@@ -42,15 +49,45 @@ public class AlarmTrigger extends AppCompatActivity {
 
     // Listener for the skip button
     View.OnClickListener skipMedicineListener = new View.OnClickListener(){
-        public void  onClick  (View  v){
+        public void  onClick  (View  v) {
             theTone.stop();
             // Remove any Lingering Handlers
             testHandler.removeCallbacks(shortTimerRunnable);
 
             // Adds a Timeline mark to the Database
             String activeID = ((GlobalVariables) AlarmTrigger.this.getApplication()).getCurrentUserID();
-            String negativeMark = alarmName + "|" +"SKIPPED";
+            String negativeMark = alarmName + "|" + "SKIPPED";
             firebaseRootRef.child("UsersID&Name").child(activeID).child("TimelineMarks").child(databaseTimeKey).setValue(negativeMark);
+
+            // Here, thisActivity is the current activity
+            if (ContextCompat.checkSelfPermission(AlarmTrigger.this,
+                    Manifest.permission.SEND_SMS)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                // Permission is not granted
+                // Should we show an explanation?
+                if (ActivityCompat.shouldShowRequestPermissionRationale(AlarmTrigger.this,
+                        Manifest.permission.SEND_SMS)) {
+                    // Show an explanation to the user *asynchronously* -- don't block
+                    // this thread waiting for the user's response! After the user
+                    // sees the explanation, try again to request the permission.
+                } else {
+                    // No explanation needed; request the permission
+                    ActivityCompat.requestPermissions(AlarmTrigger.this,
+                            new String[]{Manifest.permission.SEND_SMS},
+                            MY_PERMISSIONS_REQUEST_SEND_SMS);
+
+                    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                    // app-defined int constant. The callback method gets the
+                    // result of the request.
+                }
+            } else {
+                // Permission has already been granted
+            }
+
+
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage("+16785446219", null, "sms message", null, null);
 
 
             Intent intent = new Intent(AlarmTrigger.this, LandingScreen.class);

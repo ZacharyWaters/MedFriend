@@ -30,6 +30,7 @@ public class AddCaretaker extends AppCompatActivity {
     };
     Button requestButton;
     TextView emailInput;
+    TextView numberInput;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference firebaseRootRef = firebaseDatabase.getReference();
     //itemsRef = firebaseRootRef.child("UsersID&Name");
@@ -53,11 +54,14 @@ public class AddCaretaker extends AppCompatActivity {
         // This is the EmailInput
         emailInput = (TextView)findViewById(R.id.editEmail);
 
+        numberInput = (TextView) findViewById(R.id.editNumber);
+
         // This is the Request Button
         requestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String theirEmail = emailInput.getText().toString();
+                final String theirNumber = numberInput.getText().toString();
 
                 FirebaseDatabase.getInstance().getReference().child("UsersID&Name").
                         addListenerForSingleValueEvent(new ValueEventListener() {

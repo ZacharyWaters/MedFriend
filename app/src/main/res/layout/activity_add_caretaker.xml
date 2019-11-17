@@ -44,6 +44,28 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textEmail" />
 
+            <TextView
+                android:id="@+id/textNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Enter your caretaker's phone number"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/editNumber"
+                android:layout_width="329dp"
+                android:layout_height="match_parent"
+                android:background="#FFFFFF"
+                android:layout_gravity="center_horizontal"
+                android:ems="10"
+                android:inputType="phone"
+                android:textColor="#000000"
+                app:layout_constraintBottom_toTopOf="@+id/requestButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textEmail" />
+
             <Button
                 android:id="@+id/requestButton"
                 android:layout_width="wrap_content"

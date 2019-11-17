@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.medfriend">
 
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
     <application
         android:name=".GlobalVariables"
         android:allowBackup="true"
@@ -38,5 +40,6 @@
             android:name=".AlarmReceiver"
             android:process=":remote" />
     </application>
+
 
 </manifest>
