@@ -20,6 +20,7 @@ public class ExampleAlarmAdapter extends RecyclerView.Adapter<ExampleAlarmAdapte
 
     private ArrayList<ExampleAlarm> myExampleAlarmList;
     Context myContext;
+    Context applicationContext;
 
     public static class ExampleViewHolder extends RecyclerView.ViewHolder {
 
@@ -42,9 +43,10 @@ public class ExampleAlarmAdapter extends RecyclerView.Adapter<ExampleAlarmAdapte
         }
     }
 
-    public ExampleAlarmAdapter(ArrayList<ExampleAlarm> exampleList, Context classContext) {
+    public ExampleAlarmAdapter(ArrayList<ExampleAlarm> exampleList, Context classContext, Context inputApplicationContext) {
         myExampleAlarmList = exampleList;
         myContext = classContext;
+        applicationContext = inputApplicationContext;
     }
 
     @NonNull
@@ -112,10 +114,15 @@ public class ExampleAlarmAdapter extends RecyclerView.Adapter<ExampleAlarmAdapte
                 int deleteIndex = ((LandingScreen) myContext).getIndexOfAlarm(currentAlarmItem);
 
                 // Disable the alarm
+                AlarmInitializer.cancelAlarm(currentAlarmItem, applicationContext);
 
                 // Remove it from the active list
+                ((GlobalVariables)applicationContext).deleteActiveAlarm(currentAlarmItem.getAlarmDatabaseID());
 
+                // Remove it from the Recycler View
                 ((LandingScreen) myContext).removeItemAtIndex(deleteIndex);
+
+                // Remove it from the database
             }
         });
 

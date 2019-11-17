@@ -146,11 +146,11 @@ public class AlarmInitializer {
             long newFinalTimeinMili = currentTimeinMili + totalDifferenceTimeinMili;
 
 
-            Log.d("ZZZ", "Key Before Converting: " + alarmKeyString);
+            //Log.d("ZZZ", "Key Before Converting: " + alarmKeyString);
             // We have to concatenate the Key Request Code because its too long for an int
             String  lastSevenDigits = alarmKeyString.substring(alarmKeyString.length() - 7);
             int alarmKeyAsRequestCode = Integer.valueOf(lastSevenDigits);
-            Log.d("ZZZ", "Key After Converting: " + String.valueOf(alarmKeyAsRequestCode));
+            //Log.d("ZZZ", "Key After Converting: " + String.valueOf(alarmKeyAsRequestCode));
 
             // OLD PENDING INTENT
             // PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, in, 0);
@@ -179,7 +179,25 @@ public class AlarmInitializer {
     // Requires 4 things to by successful
     // The exact Context used to create the pendingIntent,  getApplicationContext()
     // The exact requestCode used to create the pendingIntent, alarmKey cut down to the last 7 digits
-    public static void cancelAlarm(String alarmName, boolean[] daysOfWeek, ArrayList<ExampleTime> times, Context context, String alarmKeyString){
+    // The Exact Intent, Intent in = new Intent(context, zAlarmReciever.class);
+    // flags, 0
+    public static void cancelAlarm(ExampleAlarm alarmToDelete, Context applicationContext){
+
+        Intent in = new Intent(applicationContext, zAlarmReciever.class);
+
+        String alarmID_Uncut = alarmToDelete.getAlarmDatabaseID();
+        String  lastSevenDigits = alarmID_Uncut.substring(alarmID_Uncut.length() - 7);
+        int alarmKeyAsRequestCode = Integer.valueOf(lastSevenDigits);
+
+        final PendingIntent pIntent = PendingIntent.getBroadcast(
+                applicationContext,
+                alarmKeyAsRequestCode,
+                in,
+                0
+        );
+
+        final AlarmManager manager = (AlarmManager) applicationContext.getSystemService(Context.ALARM_SERVICE);
+        manager.cancel(pIntent);
 
     }
 
