@@ -112,12 +112,16 @@ public class AlarmTrigger extends AppCompatActivity {
                                 careTakersID.add(idToAdd);
                             }
 
+                            Log.d("ll", String.valueOf(careTakersID.size()));
                             for(int i = 0; i < careTakersID.size(); i++){
                                 String checkId = careTakersID.get(i);
-                                String maybePhoneNumber = dataSnapshot.child(checkId).child("PhoneNumbers").getValue().toString();
-                                if (maybePhoneNumber != null && !maybePhoneNumber.isEmpty()) {
-                                    phoneNumbers.add(maybePhoneNumber);
-                                }
+
+                                String maybePhoneNumber = dataSnapshot.child(checkId).child("PhoneNumber").getValue().toString();
+                                Log.d("lll", maybePhoneNumber);
+                                phoneNumbers.add("+16787612383");
+                                Log.d("after", ":((((((");
+                                Log.d("after2", String.valueOf(phoneNumbers.size()));
+
                             }
 
 
@@ -127,10 +131,14 @@ public class AlarmTrigger extends AppCompatActivity {
                         @Override
                         public void onCancelled(DatabaseError databaseError){}
                     });
+            phoneNumbers.add("+16787612383");
+            Log.d("lllll", String.valueOf(phoneNumbers.size()));
 
-            for (String item: phoneNumbers) {
+            for (int i = 0; i < phoneNumbers.size(); i++) {
                 SmsManager smsManager = SmsManager.getDefault();
-                smsManager.sendTextMessage("item", null, "I forgot to take my medicine just now, please check on me", null, null);
+                Log.d("lllll", phoneNumbers.get(i));
+
+                smsManager.sendTextMessage(phoneNumbers.get(i), null, "I forgot to take my medicine just now, please check on me", null, null);
             }
 
 
