@@ -123,6 +123,7 @@ public class ExampleAlarmAdapter extends RecyclerView.Adapter<ExampleAlarmAdapte
                 ((LandingScreen) myContext).removeItemAtIndex(deleteIndex);
 
                 // Remove it from the database
+                ((LandingScreen) myContext).deleteAlarmFromDatabase(currentAlarmItem.getAlarmDatabaseID());
             }
         });
 
