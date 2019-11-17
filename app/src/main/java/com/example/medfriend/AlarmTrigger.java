@@ -106,14 +106,15 @@ public class AlarmTrigger extends AppCompatActivity {
                             // Loops through and creates a list of all the caretaker's ID's you will visit
                             ArrayList<String> careTakersID = new ArrayList<>();
                             String activeUserId = ((GlobalVariables) AlarmTrigger.this.getApplication()).getCurrentUserID();
-                            for (DataSnapshot caretaker : dataSnapshot.child(activeUserId).child("CareTakerUsers").getChildren()){
-                                String idToAdd = caretaker.getValue().toString();
+                            for (DataSnapshot caretaker : dataSnapshot.child(activeUserId).child("MyCaretakers").getChildren()){
+                                Log.d("ZZZ", ":)");
+                                String idToAdd = caretaker.getKey();
                                 careTakersID.add(idToAdd);
                             }
 
                             for(int i = 0; i < careTakersID.size(); i++){
                                 String checkId = careTakersID.get(i);
-                                String maybePhoneNumber = dataSnapshot.child(checkId).child("phoneNumber").getValue().toString();
+                                String maybePhoneNumber = dataSnapshot.child(checkId).child("phoneNumbers").getValue().toString();
                                 if (maybePhoneNumber != null && !maybePhoneNumber.isEmpty()) {
                                     phoneNumbers.add(maybePhoneNumber);
                                 }
@@ -127,7 +128,11 @@ public class AlarmTrigger extends AppCompatActivity {
                         public void onCancelled(DatabaseError databaseError){}
                     });
 
+<<<<<<< HEAD
             for (String item: phoneNumbers) {
+=======
+            for (String item : phoneNumbers) {
+>>>>>>> 385acb7ffd85ab6332ecadbccc00e2ceb1bc79f2
                 SmsManager smsManager = SmsManager.getDefault();
                 smsManager.sendTextMessage("+16787612383", null, "I forgot to take my medicine just now, please check on me", null, null);
             }
