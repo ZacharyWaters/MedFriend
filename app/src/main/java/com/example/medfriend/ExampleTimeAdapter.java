@@ -58,6 +58,17 @@ public class ExampleTimeAdapter extends RecyclerView.Adapter<ExampleTimeAdapter.
         // Set the front end XML value based of the back end's element's value
         holder.timeDisplayMessage.setText(storedTimeMessage);
 
+//        holder.deleteTimeButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ((Homepage)getActivity()).deleteAlarm(alarm, alarm.toString());
+//
+//                onDetach();
+//
+//
+//            }
+//        });
+
 //        //Here is where we are gonna set the buttons to work
 //        holder.editTimeButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
