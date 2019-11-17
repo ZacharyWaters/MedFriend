@@ -127,11 +127,9 @@ public class AlarmTrigger extends AppCompatActivity {
                         public void onCancelled(DatabaseError databaseError){}
                     });
 
-            Log.d("error", phoneNumbers.get(0));
-            for (String item : phoneNumbers) {
+            for (String item: phoneNumbers) {
                 SmsManager smsManager = SmsManager.getDefault();
-                smsManager.sendTextMessage(item, null, "I lost my medicine just now", null, null);
-
+                smsManager.sendTextMessage("+16787612383", null, "I forgot to take my medicine just now, please check on me", null, null);
             }
 
 
