@@ -2,8 +2,12 @@ package com.example.medfriend;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +32,7 @@ public class Login extends AppCompatActivity {
     // Text-views
     TextView emailInput;
     TextView passwordInput;
+    int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
 
     // Buttons
     Button loginButton;
@@ -49,6 +54,32 @@ public class Login extends AppCompatActivity {
         forgottenButton = findViewById(R.id.forgotButton);
         loginButton = findViewById(R.id.loginButton);
         registerButton = findViewById(R.id.registerButton);
+
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(Login.this,
+                Manifest.permission.SEND_SMS)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(Login.this,
+                    Manifest.permission.SEND_SMS)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(Login.this,
+                        new String[]{Manifest.permission.SEND_SMS},
+                        MY_PERMISSIONS_REQUEST_SEND_SMS);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        } else {
+            // Permission has already been granted
+        }
 
         // Gets the Current Instance of the Database
         mAuth = FirebaseAuth.getInstance();

@@ -95,7 +95,7 @@ public class Homepage extends AppCompatActivity {
 
         // Establishes the add Caretaker Button
         addCareTakerButton = findViewById(R.id.addCaretakerButton);
-        addCareTakerButton.setOnClickListener(addCaretakerListener);
+        //addCareTakerButton.setOnClickListener(addCaretakerListener);
 
         fm = this.getSupportFragmentManager();
 
